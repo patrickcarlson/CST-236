@@ -48,18 +48,40 @@ def get_triangle_type(a=0, b=0, c=0):
     else:
         return "scalene"
 
-
- def get_quadrilateral_type(a=0, b=0, c=0, d=0):
+def get_quadrilateral_type(a=0, b=0, c=0, d=0):
      """
      :param a: line a
-     :type float or int or tuple or list or dictionary
+     :type float or int or tuple or list or dict
+
      :param b:
      :type float or int
+
      :param c:
      :type float or int
+
      :param d:
      :type float or int
-     :return:
+
+     :return: str
      """
+
+     if isinstance(a (tuple, list)) and len(a) == 4:
+         d = a[3]
+         c = a[2]
+         b = a[1]
+         a = a[0]
+
+     if isinstance(a, dict) and len(a.keys()) == 4:
+        values = []
+        for value in a.values():
+            values.append(value)
+        a = values[0]
+        b = values[1]
+        c = values[2]
+        d = values[3]
+
+
+
+
 
 
