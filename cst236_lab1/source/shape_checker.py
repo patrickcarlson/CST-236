@@ -1,9 +1,25 @@
-"""
-:mod:`source.source1` -- Example source code
-============================================
 
-The following example code determines if a set of 3 sides of a triangle is equilateral, scalene or iscoceles
 """
+* Author:				Patrick Carlson
+* Date Created:			N/A
+* Last Modification Date:	01/13/2016
+* Assignment Number:    CST 236 Lab 1
+* Filename:				shape_checker.py
+*
+* Overview:
+*	Shape checker provides functions which will take sides, and angles, to output
+*   whether the shape is a triangle(and what type of triangle it is), square, rectangle, or
+*   rhombus. Example code used as a template for this assignment provided by instructor Josh
+*   Kimbell
+*
+* Input:
+*	Each function takes in values for the sides of the shape, single character variables represent
+*   side values, and 2 character variables represent the angle between two sides.
+*
+* Output:
+*	Each function returns a string representative of the findings from the inputted sides/angles.
+"""
+
 
 def get_triangle_type(a=0, b=0, c=0):
     """
@@ -50,6 +66,9 @@ def get_triangle_type(a=0, b=0, c=0):
 
 def get_squarerectangle_type(a=0, b=0, c=0, d=0):
     """
+
+    Determine if the provided quadrilateral is a Square or Rectangle
+
     :param a: line a
     :type float or int
 
@@ -82,6 +101,8 @@ def get_squarerectangle_type(a=0, b=0, c=0, d=0):
 
 def get_quadrilateral_type(a=0, b=0, c=0, d=0, ab=0, bc=0, cd=0, da=0):
     """
+
+    Determine if the provided quadrilateral is a square, rectangle, or rhombus.
     :param a: line 1
     :type float or int
 

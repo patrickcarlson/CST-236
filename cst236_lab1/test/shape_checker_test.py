@@ -1,5 +1,24 @@
 """
-Test for source.shape_checker
+* Author:				Patrick Carlson
+* Date Created:			N/A
+* Last Modification Date:	01/13/2016
+* Assignment Number:    CST 236 Lab 1
+* Filename:				shape_checker_test.py
+*
+* Overview:
+*	Shape checker provides functions which will take sides, and angles, to output
+*   whether the shape is a triangle(and what type of triangle it is), square, rectangle, or
+*   rhombus. Shape checker test runs tests on the functions provided in shape checker.
+*   Each test checks a different aspect of potential inputs that a user may expose the
+*   shape checker to. Example code used as a template for this assignment provided by
+*   instructor Josh Kimbell.
+*
+* Input:
+*	Each of the shape checker functions are imported to the shape checker test. A seperate class is
+*   set up for each of the shape checking functions.
+*
+* Output:
+*	Outputs test results to console. Failed tests will reference the test function which failed.
 """
 from source.shape_checker import get_triangle_type, get_squarerectangle_type, get_quadrilateral_type
 from unittest import TestCase
@@ -95,3 +114,15 @@ class TestGetQuadrilateralType(TestCase) :
     def test_get_quadrilateral_anglesnotequaltooneeighty_all_int(self):
         result = get_quadrilateral_type(1, 2, 3, 4, 33, 146, 33, 146)
         self.assertEqual(result, 'disconnected')
+
+    def test_get_quadrilateral_angleboundariesunder_all_float(self):
+        result = get_quadrilateral_type(2, 2, 2, 2, 179.9, .1, 179.9, .1)
+        self.assertEqual(result, 'rhombus')
+
+    def test_get_quadrilateral_angleboundariesequal_all_float(self):
+        result = get_quadrilateral_type(2, 2, 2, 2, 180.0, 0, 180.0, 0)
+        self.assertEqual(result, 'invalid')
+
+    def test_get_quadrilateral_angleboundariesover_all_float(self):
+        result = get_quadrilateral_type(2, 2, 2, 2, 180.1, .1, 180.1, .1)
+        self.assertEqual(result, 'invalid')
