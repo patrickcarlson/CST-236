@@ -130,19 +130,40 @@ def get_quadrilateral_type(a=0, b=0, c=0, d=0, ab=0, bc=0, cd=0, da=0):
     :return: str
     """
 
+    """
+    " Check that inputted value is float or int. return invalid if not
+    """
     if not (isinstance(a, (int, float)) and isinstance(b, (int, float)) and isinstance(c, (int, float)) and isinstance(d, (int, float))):
         return 'invalid'
 
+    """
+    " Check that inputted value is float or int. return invalid if not
+    """
     if not (isinstance(ab, (int, float)) and isinstance(bc, (int, float)) and isinstance(cd, (int, float)) and isinstance(da, (int, float))):
         return 'invalid'
 
+    """
+    " Check that inputted side values are greater than zero. return invalid if not
+    """
     if a <= 0 or b <= 0 or c <= 0 or d <= 0:
         return 'invalid'
-
+    """
+    " Check that inputted angle values are greater than zero. return invalid if not
+    """
     if ab <= 0 or bc <= 0 or cd <= 0 or da <= 0:
         return 'invalid'
 
+    """
+    " Check that inputted angle values are less than 180 degrees. return invalid if not
+    """
     if ab >= 180 or bc >= 180 or cd >= 180 or da >= 180:
+        return 'invalid'
+
+    """
+    " Check whether inputted values represent a parrallelogram instead of a rhombus. If
+    " True, return invalid.
+    """
+    if ab != 90 and ab + cd == 180 and bc + da == 180 and a != b and a == c and b == d:
         return 'invalid'
 
     if a == b and b == c and c == d and ab == 90 and bc == 90 and cd == 90 and da == 90:
