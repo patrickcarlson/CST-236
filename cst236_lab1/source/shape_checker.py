@@ -10,7 +10,7 @@
 *	Shape checker provides functions which will take sides, and angles, to output
 *   whether the shape is a triangle(and what type of triangle it is), square, rectangle, or
 *   rhombus. Example code used as a template for this assignment provided by instructor Josh
-*   Kimbell
+*   Kimbal
 *
 * Input:
 *	Each function takes in values for the sides of the shape, single character variables represent
