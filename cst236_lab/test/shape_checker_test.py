@@ -1,8 +1,8 @@
 """
 * Author:				Patrick Carlson
 * Date Created:			N/A
-* Last Modification Date:	01/13/2016
-* Assignment Number:    CST 236 Lab 1
+* Last Modification Date:	01/19/2016
+* Assignment Number:    CST 236 Lab 2
 * Filename:				shape_checker_test.py
 *
 * Overview:
@@ -18,7 +18,9 @@
 *   set up for each of the shape checking functions.
 *
 * Output:
-*	Outputs test results to console. Failed tests will reference the test function which failed.
+*	Outputs test results to console, and also outputs a list of requirements and which
+*   test applies to each requirement in TraceOutput.txt.
+*
 """
 from source.shape_checker import get_triangle_type, get_squarerectangle_type, get_quadrilateral_type
 from unittest import TestCase
@@ -66,89 +68,89 @@ class TestGetTriangleType(TestCase):
 
 class TestGetSquareRectangleType(TestCase) :
 
-    @requirements(['#0001', '#0002'])
+    @requirements(['#0003', '#0004'])
     def test_get_squarerectangle_lessthanzero_all_int(self):
         result = get_squarerectangle_type(-1, -1 , -1, -1)
         self.assertEqual(result, 'invalid')
 
-    @requirements(['#0001', '#0002'])
+    @requirements(['#0003', '#0004'])
     def test_get_squarerectangle_nonintfloat_all_char(self):
         result = get_squarerectangle_type('A', 'A', 'A', 'A')
         self.assertEqual(result, 'invalid')
 
-    @requirements(['#0001', '#0002'])
+    @requirements(['#0003', '#0004'])
     def test_get_squarerectangle_square_all_int(self):
         result = get_squarerectangle_type(2, 2, 2, 2,)
         self.assertEqual(result, 'square')
 
-    @requirements(['#0001', '#0002'])
+    @requirements(['#0003', '#0004'])
     def test_get_squarerectangle_square_all_float(self):
         result = get_squarerectangle_type(2.22, 2.22, 2.22, 2.22,)
         self.assertEqual(result, 'square')
 
-    @requirements(['#0001', '#0002'])
+    @requirements(['#0003', '#0004'])
     def test_get_squarerectangle_rectangle_all_int(self):
         result = get_squarerectangle_type(1, 2, 1, 2)
         self.assertEqual(result, 'rectangle')
 
-    @requirements(['#0001', '#0002'])
+    @requirements(['#0003', '#0004'])
     def test_get_squarerectangle_wronglength_all_int(self):
         result = get_squarerectangle_type(1, 2, 1, 3)
         self.assertEqual(result, 'invalid')
 
 class TestGetQuadrilateralType(TestCase) :
 
-    @requirements(['#0001', '#0002'])
+    @requirements(['#0003', '#0004', '#0005'])
     def test_get_quadrilateral_sidelessthanzero_all_int(self):
         result = get_quadrilateral_type(-1, -1, -1, -1, 90, 90, 90, 90)
         self.assertEqual(result, 'invalid')
 
-    @requirements(['#0001', '#0002'])
+    @requirements(['#0003', '#0004', '#0005'])
     def test_get_quadtrilateral_anglelessthanzero_all_int(self):
         result = get_quadrilateral_type(2, 2, 2, 2, -5, -5, -5, -5)
         self.assertEqual(result, 'invalid')
 
-    @requirements(['#0001', '#0002'])
+    @requirements(['#0003', '#0004', '#0005'])
     def test_get_quadrilateral_anglegreaterthanoneeighty_all_int(self):
         result = get_quadrilateral_type(2, 2, 2, 2, 190, 90, 90, 90)
         self.assertEqual(result, 'invalid')
 
-    @requirements(['#0001', '#0002'])
+    @requirements(['#0003', '#0004', '#0005'])
     def test_get_quadrilateral_square_all_float(self):
         result = get_quadrilateral_type(2.4, 2.4, 2.4, 2.4, 90, 90, 90, 90)
         self.assertEqual(result, 'square')
 
-    @requirements(['#0001', '#0002'])
+    @requirements(['#0003', '#0004', '#0005'])
     def test_get_quadrilateral_rectangle_all_int(self):
         result = get_quadrilateral_type(2, 4, 2, 4, 90, 90, 90, 90)
         self.assertEqual(result, 'rectangle')
 
-    @requirements(['#0001', '#0002'])
+    @requirements(['#0003', '#0004', '#0005'])
     def test_get_quadrilateral_rhombus_all_int(self):
         result = get_quadrilateral_type(3, 3, 3, 3, 44, 136, 44, 136)
         self.assertEqual(result, 'rhombus')
 
-    @requirements(['#0001', '#0002'])
+    @requirements(['#0003', '#0004', '#0005'])
     def test_get_quadrilateral_unequalsides_all_int(self):
         result = get_quadrilateral_type(2, 2, 2, 4, 50, 130, 50, 130)
         self.assertEqual(result, 'disconnected')
 
-    @requirements(['#0001', '#0002'])
+    @requirements(['#0003', '#0004', '#0005'])
     def test_get_quadrilateral_anglesnotequaltooneeighty_all_int(self):
         result = get_quadrilateral_type(1, 2, 3, 4, 33, 146, 33, 146)
         self.assertEqual(result, 'disconnected')
 
-    @requirements(['#0001', '#0002'])
+    @requirements(['#0003', '#0004', '#0005'])
     def test_get_quadrilateral_angleboundariesunder_all_float(self):
         result = get_quadrilateral_type(2, 2, 2, 2, 179.9, .1, 179.9, .1)
         self.assertEqual(result, 'rhombus')
 
-    @requirements(['#0001', '#0002'])
+    @requirements(['#0003', '#0004', '#0005'])
     def test_get_quadrilateral_angleboundariesequal_all_float(self):
         result = get_quadrilateral_type(2, 2, 2, 2, 180.0, 0, 180.0, 0)
         self.assertEqual(result, 'invalid')
 
-    @requirements(['#0001', '#0002'])
+    @requirements(['#0003', '#0004', '#0005'])
     def test_get_quadrilateral_angleboundariesover_all_float(self):
         result = get_quadrilateral_type(2, 2, 2, 2, 180.1, .1, 180.1, .1)
         self.assertEqual(result, 'invalid')
