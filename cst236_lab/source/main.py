@@ -1,6 +1,7 @@
+import time
 from source.question_answer import QA
 from source.shape_checker import get_triangle_type, get_squarerectangle_type, get_quadrilateral_type
-
+from source.jsanswers import get_current_time
 import difflib
 NOT_A_QUESTION_RETURN = "Was that a question?"
 UNKNOWN_QUESTION = "I don't know, please provide the answer"
@@ -21,6 +22,7 @@ class Interface(object):
         self.question_answers = {
             'What type of triangle is ': QA('What type of triangle is ', get_triangle_type),
             'What type of quadrilateral is ': QA('What type of quadrilateral is ', get_quadrilateral_type),
+            'What time is it' :QA('What time is it', get_current_time)
         }
         self.last_question = None
 

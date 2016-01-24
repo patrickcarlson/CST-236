@@ -32,7 +32,8 @@ class RequirementTraceOutput(Plugin):
         with open('TraceOutput.txt', 'w') as f:
             for key, item in sorted(Requirements.items()):
                 f.write(key + ' ' + str(item.func_name) + '\n')
-
+            for item in Stories:
+                f.write(item.JStext + ' ' + str(item.func_name) + '\n')
 
 class RequirementTrace(object):
     req_text = ""
@@ -40,7 +41,15 @@ class RequirementTrace(object):
         self.req_text = text
         self.func_name = []
 
+class JSTrace(object):
+    JStext = ""
+    def __init__(self, text):
+        self.JStext = text
+        self.func_name = []
+
 Requirements = {}
+
+Stories = []
 
 def requirements(req_list):
     def wrapper(func):
@@ -55,8 +64,26 @@ def requirements(req_list):
 
     return wrapper
 
-with open('TracerInputReqs.txt') as f:
+
+def story(story_list):
+    def wrapper(func):
+        def add_story_and_call(*args, **kwargs):
+            for st in story_list:
+                for item in Stories:
+                    if item.JStext.lower() == st.lower():
+                        item.func_name.append(func.__name__)
+            return func(*args, **kwargs)
+
+        return add_story_and_call
+
+    return wrapper
+
+with open('ProjectRequirements.txt') as f:
     for line in f.readlines():
         if '#00' in line:
             req_id, desc = line.split(' ', 1)
             Requirements[req_id] = RequirementTrace(desc)
+        if '*' in line:
+            storyadd = line.lstrip('* ')
+            storyadd = storyadd.rstrip('\n')
+            Stories.append(JSTrace(storyadd))
