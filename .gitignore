@@ -1,2 +1,5 @@
 *.pyc
 *.idea
+cst236_lab/.coverage
+cst236_lab/TraceOutput.txt
+cst236_lab/htmlcov/*
