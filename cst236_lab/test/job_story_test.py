@@ -19,13 +19,31 @@ class jobstoryquestions(TestCase):
         self.assertEqual(result, 21)
 
     @story(['When I ask "What is the n digit of fibonacci" I want to receive the answer so I don\'t have to figure it out myself'])
+    def test_question_fibonacci_nthdigit_float(self):
+        qaobject = Interface()
+        result = qaobject.ask("What is the 8.55 digit of fibonacci?")
+        self.assertEqual(result, 'invalid')
+
+    @story(['When I ask "What is the n digit of fibonacci" I want to receive the answer so I don\'t have to figure it out myself'])
     def test_question_fibonacci_negativeinput(self):
         qaobject = Interface()
         result = qaobject.ask("What is the -8 digit of fibonacci?")
         self.assertEqual(result, 'invalid')
 
     @story(['When I ask "What is the n digit of pi" I want to receive the answer so I don\'t have to figure it out myself'])
-    def test_question_pi_nthdigiit_float(self):
+    def test_question_pi_nthdigit_float(self):
         qaobject = Interface()
         result = qaobject.ask("What is the 3.5 digit of pi?")
-        self.assertEqual(result, "invalid")
+        self.assertEqual(result, 'invalid')
+
+    @story(['When I ask "What is the n digit of pi" I want to receive the answer so I don\'t have to figure it out myself'])
+    def test_question_pi_nthdigit_negative(self):
+        qaobject = Interface()
+        result = qaobject.ask("What is the -22 digit of pi?")
+        self.assertEqual(result, 'invalid')
+
+    @story(['When I ask "What is the n digit of pi" I want to receive the answer so I don\'t have to figure it out myself'])
+    def test_question_pi_nthdigit(self):
+        qaobject = Interface()
+        result = qaobject.ask("What is the 3 digit of pi?")
+        self.assertEqual(result, 4)
