@@ -47,3 +47,7 @@ class jobstoryquestions(TestCase):
         qaobject = Interface()
         result = qaobject.ask("What is the 3 digit of pi?")
         self.assertEqual(result, 4)
+        result = qaobject.ask("What is the 9 digit of pi?")
+        self.assertEqual(result, 5)
+        result = qaobject.ask("What is the 30 digit of pi?")
+        self.assertEqual(result, 7)

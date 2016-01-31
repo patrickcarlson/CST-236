@@ -25,9 +25,19 @@ def get_nth_digit_fibonacci(n=0):
 """
 def get_nth_digit_pi(n = 0):
     if n > 0 and float.is_integer(n):
-        n = int(n)
-        digit = (pi * 10**(n-1)) % 10
-        digit = digit - digit % 1
-        return digit
+        open ("millionpi.txt")
+
+        if n == 1:
+            return 3
+
+        else:
+            return piString[n + 1]
+
+
+
+        # n = int(n)
+        # digit = (pi * 10**(n-1)) % 10
+        # digit = digit - digit % 1
+        # return digit
     else:
         return 'invalid'
