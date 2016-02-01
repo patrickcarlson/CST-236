@@ -1,5 +1,6 @@
 from math import sqrt, pi
 import time
+from decimal import Decimal
 
 """
 #returns current time and date based on local.
@@ -24,20 +25,12 @@ def get_nth_digit_fibonacci(n=0):
 #returns nth digit of pi. if n provided has decimal digits, returns invalid
 """
 def get_nth_digit_pi(n = 0):
+
+#todo(Patrick) Not getting enough digits out of pi, import a .txt with million?
     if n > 0 and float.is_integer(n):
-        open ("millionpi.txt")
-
-        if n == 1:
-            return 3
-
-        else:
-            return piString[n + 1]
-
-
-
-        # n = int(n)
-        # digit = (pi * 10**(n-1)) % 10
-        # digit = digit - digit % 1
-        # return digit
+        n = int(n)
+        digit = (Decimal(pi) * 10**(n-1)) % 10
+        digit = Decimal(digit) - Decimal(digit) % 1
+        return digit
     else:
         return 'invalid'

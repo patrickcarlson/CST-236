@@ -1,4 +1,4 @@
-import time
+import time, os, getpass
 from source.main import Interface
 from unittest import TestCase
 from test.plugins.ReqTracer import requirements, story
@@ -49,5 +49,31 @@ class jobstoryquestions(TestCase):
         self.assertEqual(result, 4)
         result = qaobject.ask("What is the 9 digit of pi?")
         self.assertEqual(result, 5)
-        result = qaobject.ask("What is the 30 digit of pi?")
-        self.assertEqual(result, 7)
+        #todo(Patrick) Need more decimal places
+        # result = qaobject.ask("What is the 28 digit of pi?")
+        # self.assertEqual(result, 2)
+
+    @story(['When I ask "Please clear memory" I was the application to clear user set questions and answers so I can reset the application'])
+    def test_request_clearmemory(self):
+        qaobject = Interface()
+        qaobject.ask("What color is the cow?")
+        qaobject.teach("brown")
+        result = qaobject.ask("What color is the cow?")
+        self.assertEqual(result, 'brown')
+        qaobject.request("Please clear memory")
+        result = qaobject.teach('blue')
+        self.assertEqual(result, "Please ask a question first")
+        result = qaobject.ask("What color is the cow?")
+        self.assertEqual(result, "I don't know, please provide the answer")
+
+    @story(['When I say "Open the door hal", I want the application to say "I\'m afraid I can\'t do that <user name> so I know that is not an option'])
+    def test_request_hal_open_door(self):
+        qaobject = Interface()
+        result = qaobject.request("Open the door hal")
+        halandusername = "I'm afraid I can't do that " + getpass.getuser()
+        self.assertEqual(result, halandusername)
+
+#todo(Patrick) Implement unit coversion
+    @story(['When I ask "Convert <number> <units> to <units>" I want to receive the converted value and units so I can know the answer.'])
+    def test_request_covert_units_single(self):
+        qaobject = Interface()

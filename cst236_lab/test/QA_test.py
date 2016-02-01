@@ -52,13 +52,6 @@ class testQuestionAnswer(TestCase):
         result = qaobject.ask("What_type_of_triangle_is: 3 3 3?")
         self.assertEqual(result, 'Was that a question?')
 
-#Todo(Patrick) Does not apply to any requirements, Remove?
-    # @requirements(['#0010'])
-    # def test_question_lastquestionstored(self):
-    #     qaobject = Interface()
-    #     qaobject.ask("What type of triangle is: 3 3 3?")
-    #     self.assertEqual(qaobject.last_question, "What type of triangle is:")
-
     @requirements(['#0005', '#0006', '#0007', '#0011'])
     def test_question_90percentkeywordmatch(self):
         qaobject = Interface()

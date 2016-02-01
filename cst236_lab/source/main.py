@@ -1,8 +1,7 @@
-import time
 from source.question_answer import QA
 from source.shape_checker import get_triangle_type, get_squarerectangle_type, get_quadrilateral_type
 from source.jsanswers import get_current_time_date, get_nth_digit_fibonacci, get_nth_digit_pi
-import difflib
+import difflib, copy, getpass
 NOT_A_QUESTION_RETURN = "Was that a question?"
 UNKNOWN_QUESTION = "I don't know, please provide the answer"
 NO_QUESTION = 'Please ask a question first'
@@ -19,22 +18,48 @@ class Interface(object):
         self.keywords = ['How', 'What', 'Where', 'Who', "Why"]
         self.question_mark = chr(0x3F)
 
-        self.question_answers = {
+        self.question_answers_default = {
             'What type of triangle is ': QA('What type of triangle is ', get_triangle_type),
             'What type of quadrilateral is ': QA('What type of quadrilateral is ', get_quadrilateral_type),
             'What time is it' :QA('What time is it', get_current_time_date),
             'What is the digit of fibonacci' :QA('What is the digit of fibonacci', get_nth_digit_fibonacci),
             'What is the digit of pi' :QA('What is the digit of pi', get_nth_digit_pi)
         }
+        self.question_answers = copy.deepcopy(self.question_answers_default)
+
         self.last_question = None
+
+
+    def request(self, request):
+        if not isinstance(request, str):
+            raise Exception('Not A String')
+
+        if request.lower() == "please clear memory":
+            self.question_answers = copy.deepcopy(self.question_answers_default)
+            self.last_question = None
+            return
+
+        if request.lower() == "open the door hal":
+            return ("I'm afraid I can't do that " + getpass.getuser())
+
 
     def ask(self, question=""):
         if not isinstance(question, str):
             self.last_question = None
             raise Exception('Not A String!')
+
+
+#Resets questions/answers to default provided by application
+
+        # if question.lower() == "please clear memory":
+        #     self.question_answers = copy.deepcopy(self.question_answers_default)
+        #     self.last_question = None
+        #     return
+
         if question[-1] != self.question_mark or question.split(' ')[0] not in self.keywords:
             self.last_question = None
             return NOT_A_QUESTION_RETURN
+
         else:
             parsed_question = ""
             args = []
