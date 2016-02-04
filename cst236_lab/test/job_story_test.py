@@ -1,4 +1,21 @@
-import time, os, getpass
+"""
+* Author:				Patrick Carlson
+* Date Created:			01/23/2016
+* Last Modification Date:	02/03/2016
+* Assignment Number:    CST 236 Lab 3
+* Filename:				job_story_test.py
+*
+* Overview:
+*	Tests provided job stories in ProjectRequirements.txt
+*
+* Input:
+*	Takes in a string equal to equivalent string in ProjectRequirements.txt
+*   Imports Interface object from main, which is the code to be tested.
+* Output:
+*	Output to console with number of tests, and whether succesful, also updates TraceOutput.txt
+*   with which tests correspeond with which project requirements.
+"""
+import time, getpass
 from source.main import Interface
 from unittest import TestCase
 from test.plugins.ReqTracer import requirements, story
@@ -73,7 +90,73 @@ class jobstoryquestions(TestCase):
         halandusername = "I'm afraid I can't do that " + getpass.getuser()
         self.assertEqual(result, halandusername)
 
-#todo(Patrick) Implement unit coversion
     @story(['When I ask "Convert <number> <units> to <units>" I want to receive the converted value and units so I can know the answer.'])
-    def test_request_covert_units_single(self):
+    def test_request_convert_units_single(self):
         qaobject = Interface()
+        result = qaobject.request("Convert 10 meters to kilometers")
+        self.assertEqual(result, "0.01 kilometers")
+
+    @story(['When I ask for a numberic conversion I want at least 10 different units I can convert from/to'])
+    def test_request_convert_units_tenunits(self):
+        qaobject = Interface()
+        result = qaobject.request("Convert 10 meters to kilometers")
+        self.assertEqual(result, "0.01 kilometers")
+        result = qaobject.request("Convert 10 meters to megameters")
+        self.assertEqual(result, "0.00001 megameters")
+        result = qaobject.request("Convert 10 meters to decameters")
+        self.assertEqual(result, "1.0 decameters")
+        result = qaobject.request("Convert 10 meters to hectometers")
+        self.assertEqual(result, "0.1 hectometers")
+        result = qaobject.request("Convert 10 meters to gigameters")
+        self.assertEqual(result, "0.00000001 gigameters")
+        result = qaobject.request("Convert 10 meters to terameters")
+        self.assertEqual(result, "0.00000000001 terameters")
+        result = qaobject.request("Convert 10 meters to decimeters")
+        self.assertEqual(result, "100.0 decimeters")
+        result = qaobject.request("Convert 10 meters to centimeters")
+        self.assertEqual(result, "1000.0 centimeters")
+        result = qaobject.request("Convert 10 meters to millimeters")
+        self.assertEqual(result, "10000.0 millimeters")
+        result = qaobject.request("Convert 10 meters to micrometers")
+        self.assertEqual(result, "10000000.0 micrometers")
+
+
+
+    @story(['When I ask for a numberic conversion I want at least 10 different units I can convert from/to'])
+    def test_request_convert_unknownunit(self):
+        qaobject = Interface()
+        result = qaobject.request("Convert 10 cups to gallons")
+        self.assertEqual(result, "Unknown unit")
+
+    @story(['When I ask "What color is the kitten?" I want to be given a random color.'])
+    def test_ask_cat_color(self):
+        qaobject = Interface()
+        result = qaobject.ask("What color is the kitten?")
+        self.assertTrue(result in qaobject.colors)
+        result = qaobject.ask("What color is the kitten?")
+        self.assertTrue(result in qaobject.colors)
+
+    @story(['When I ask "How many vowels are in: <word>?" I want a number telling me how many vowels are in the word.'])
+    def test_ask_vowels_word(self):
+        qaobject = Interface()
+        result = qaobject.ask("How many vowels are in : Apple?")
+        self.assertEqual(result, 2)
+
+    @story(['When I say "Go Owls!" I want to be return the string "Hoo Hoo"'])
+    def test_request_hooting(self):
+        qaobject = Interface()
+        result = qaobject.request("Go Owls!")
+        self.assertEqual(result, 'Hoo Hoo')
+
+    @story(['Any time someone requests "Go Owls" the last question should be set to "What is OIT?" and the answer should be "Oregon Institue of Technology'])
+    def test_request_hoot_updateOIT(self):
+        qaobject = Interface()
+        qaobject.request("Go Owls!")
+        result = qaobject.ask("What is OIT?")
+        self.assertEqual(result, "Oregon Institute of Technology")
+
+    @story(['Any time someone asks "What is the airspeed velocity of a laden swallow" the application should ask whether european or african'])
+    def test_monty_python_swallow(self):
+        qaobject = Interface()
+        result = qaobject.ask("What is the airspeed velocity of a laden swallow?")
+        self.assertEqual(result, "African or European?")

@@ -1,7 +1,7 @@
 """
 * Author:				Patrick Carlson
 * Date Created:			01/16/2016
-* Last Modification Date:	01/22/2016
+* Last Modification Date:	02/03/2016
 * Assignment Number:    CST 236 Lab 2
 * Filename:				QA_test.py
 *
@@ -125,4 +125,19 @@ class testQuestionAnswer(TestCase):
         qaobject = Interface()
         result = qaobject.correct("42")
         self.assertEqual(result, 'Please ask a question first')
+
+    @requirements(['#0022'])
+    def test_request_notastring(self):
+        qaobject = Interface()
+        self.assertRaises(Exception, qaobject.request, 2555)
+
+    @requirements(['#0022'])
+    def test_ask_notastring(self):
+        qaobject = Interface()
+        self.assertRaises(Exception, qaobject.ask, 45566)
+
+    @requirements(['#0023'])
+    def test_ask_toomanyparamters(self):
+        qaobject = Interface()
+        self.assertRaises(Exception, qaobject.ask, "What type of triangle is: 3 4 5 6?")
 

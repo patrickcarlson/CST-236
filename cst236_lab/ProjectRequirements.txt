@@ -40,6 +40,10 @@
 
 #0021 If no previous question has been asked the system shall respond with "Please ask a question first"
 
+#0022 If a question or request is not submitted as a string, an exception will be raised.
+
+#0023 If a submitted question has too many parameters for the associated function, an exception should be thrown.
+
 * When I ask "What time is it?" I want to be given the current date/time so I can stay up to date
 
 * When I ask "What is the n digit of fibonacci" I want to receive the answer so I don't have to figure it out myself
@@ -53,3 +57,11 @@
 * When I ask "Convert <number> <units> to <units>" I want to receive the converted value and units so I can know the answer.
 
 * When I ask for a numberic conversion I want at least 10 different units I can convert from/to
+
+* When I ask "What color is the kitten?" I want to be given a random color.
+
+* When I ask "How many vowels are in: <word>?" I want a number telling me how many vowels are in the word.
+
+* Any time someone requests "Go Owls" the last question should be set to "What is OIT?" and the answer should be "Oregon Institue of Technology
+
+* Any time someone asks "What is the airspeed velocity of a laden swallow" the application should ask whether european or african

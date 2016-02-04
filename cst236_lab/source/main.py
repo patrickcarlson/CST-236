@@ -1,6 +1,25 @@
+"""
+* Author:				Patrick Carlson
+* Date Created:			N/A
+* Last Modification Date:	02/03/2016
+* Assignment Number:    CST 236 Lab 3
+* Filename:				main.py
+*
+* Overview:
+*	main.py contains the Interface object, created by Josh Kimball, which is used as
+ *  a question and answer system. It supports a number of known questions and requests, but
+ *  can also be taught answers to questions. Example code used as a template for this assignment provided by instructor Josh
+*   Kimbal
+*
+* Input:
+*	Input is in the form of strings from console.
+*
+* Output:
+*	Strings, chars, or ints/floats to console as answers to questions provided in string form.
+"""
 from source.question_answer import QA
 from source.shape_checker import get_triangle_type, get_squarerectangle_type, get_quadrilateral_type
-from source.jsanswers import get_current_time_date, get_nth_digit_fibonacci, get_nth_digit_pi
+from source.jsanswers import get_current_time_date, get_nth_digit_fibonacci, get_nth_digit_pi, get_cat_color, get_vowel_count
 import difflib, copy, getpass
 NOT_A_QUESTION_RETURN = "Was that a question?"
 UNKNOWN_QUESTION = "I don't know, please provide the answer"
@@ -18,12 +37,21 @@ class Interface(object):
         self.keywords = ['How', 'What', 'Where', 'Who', "Why"]
         self.question_mark = chr(0x3F)
 
+        self.units = {'micrometers' : -6, 'millimeters' : -3, 'centimeters' : -2,
+                      'decimeters' : -1, 'meters' : 0, 'decameters' : 1, 'hectometers' : 2,
+                      'kilometers': 3, 'megameters' : 6, 'gigameters' : 9, 'terameters' : 12}
+
+        self.colors = ['White', 'Brown', 'Blue', 'Green', 'Purple', 'Orange', 'Black']
+
         self.question_answers_default = {
             'What type of triangle is ': QA('What type of triangle is ', get_triangle_type),
             'What type of quadrilateral is ': QA('What type of quadrilateral is ', get_quadrilateral_type),
             'What time is it' :QA('What time is it', get_current_time_date),
             'What is the digit of fibonacci' :QA('What is the digit of fibonacci', get_nth_digit_fibonacci),
-            'What is the digit of pi' :QA('What is the digit of pi', get_nth_digit_pi)
+            'What is the digit of pi' :QA('What is the digit of pi', get_nth_digit_pi),
+            'What color is the kitten' :QA('What color is the kitten', get_cat_color),
+            'How many vowels are in ' : QA('How many vowels are in', get_vowel_count),
+            'What is the airspeed velocity of a laden swallow' :QA('What is the airspeed velocity of a laden swallow', 'African or European?')
         }
         self.question_answers = copy.deepcopy(self.question_answers_default)
 
@@ -42,19 +70,33 @@ class Interface(object):
         if request.lower() == "open the door hal":
             return ("I'm afraid I can't do that " + getpass.getuser())
 
+        if request.split(' ')[0] == 'Convert':
+            numAmount = float(request.split(' ')[1])
+            fromUnit = request.split(' ')[2].lower()
+            toUnit = request.split(' ')[4].lower()
+            if fromUnit and toUnit in self.units.keys():
+                exponent = self.units.get(fromUnit) - self.units.get(toUnit)
+                returnValue = numAmount * 10**exponent
+                returnValue = str('{:.16f}'.format(returnValue))
+                while returnValue[-1] == '0':
+                    returnValue = returnValue[:-1]
+                if returnValue[-1] == '.':
+                    returnValue = returnValue + '0'
+                return returnValue + ' ' + toUnit
+            else:
+                return "Unknown unit"
+
+        if request.lower() == "go owls!":
+            self.last_question = "What is OIT"
+            self.teach("Oregon Institute of Technology")
+            return 'Hoo Hoo'
+
 
     def ask(self, question=""):
         if not isinstance(question, str):
             self.last_question = None
             raise Exception('Not A String!')
 
-
-#Resets questions/answers to default provided by application
-
-        # if question.lower() == "please clear memory":
-        #     self.question_answers = copy.deepcopy(self.question_answers_default)
-        #     self.last_question = None
-        #     return
 
         if question[-1] != self.question_mark or question.split(' ')[0] not in self.keywords:
             self.last_question = None
@@ -63,11 +105,20 @@ class Interface(object):
         else:
             parsed_question = ""
             args = []
-            for keyword in question[:-1].split(' '):
-                try:
-                    args.append(float(keyword))
-                except:
-                    parsed_question += "{0} ".format(keyword)
+            if question.split(' ')[0] == 'How' and question.split(' ')[2] == 'vowels':
+                for keyword in question[:-1].split(' '):
+                    if parsed_question.endswith(': '):
+                        args.append(str(keyword))
+                    else:
+                        parsed_question += "{0} ".format(keyword)
+
+            else:
+                for keyword in question[:-1].split(' '):
+                    try:
+                        args.append(float(keyword))
+                    except:
+                        parsed_question += "{0} ".format(keyword)
+
             parsed_question = parsed_question[0:-1]
             self.last_question = parsed_question
             for answer in self.question_answers.values():

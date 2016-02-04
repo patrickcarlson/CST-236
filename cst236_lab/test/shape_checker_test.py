@@ -1,7 +1,7 @@
 """
 * Author:				Patrick Carlson
 * Date Created:			N/A
-* Last Modification Date:	01/19/2016
+* Last Modification Date:	02/03/2016
 * Assignment Number:    CST 236 Lab 2
 * Filename:				shape_checker_test.py
 *
@@ -100,6 +100,16 @@ class TestGetSquareRectangleType(TestCase) :
 
 class TestGetQuadrilateralType(TestCase) :
 
+    @requirements(['#0004', '#0005'])
+    def test_get_quadrilateral_side_non_int_float(self):
+        result = get_quadrilateral_type('a', 'b', 'c', 'd', 90, 90, 90, 90)
+        self.assertEqual(result, 'invalid')
+
+    @requirements(['#0004', '#0005'])
+    def test_get_quadrilateral_angle_non_int_float(self):
+        result = get_quadrilateral_type(14, 5, 14, 5, 'w', 'x', 'y', 'z')
+        self.assertEqual(result, 'invalid')
+
     @requirements(['#0003', '#0004', '#0005'])
     def test_get_quadrilateral_sidelessthanzero_all_int(self):
         result = get_quadrilateral_type(-1, -1, -1, -1, 90, 90, 90, 90)
@@ -153,4 +163,9 @@ class TestGetQuadrilateralType(TestCase) :
     @requirements(['#0003', '#0004', '#0005'])
     def test_get_quadrilateral_angleboundariesover_all_float(self):
         result = get_quadrilateral_type(2, 2, 2, 2, 180.1, .1, 180.1, .1)
+        self.assertEqual(result, 'invalid')
+
+    @requirements(['#0003', '#0004', '#0005'])
+    def test_get_quadrilateral_parrallelogram(self):
+        result = get_quadrilateral_type(4, 5, 4, 5, 110, 70, 110, 70)
         self.assertEqual(result, 'invalid')
