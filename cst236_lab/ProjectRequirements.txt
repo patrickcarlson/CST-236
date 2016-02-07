@@ -65,3 +65,11 @@
 * Any time someone requests "Go Owls" the last question should be set to "What is OIT?" and the answer should be "Oregon Institue of Technology
 
 * Any time someone asks "What is the airspeed velocity of a laden swallow" the application should ask whether european or african
+
+* Any time someone asks "What is the smallest amount of coins that can be returned for : <cash>?" the application should read back " x quarters, x dimes, x nickels, and x pennies."
+
+* Any time someone asks "What are the angle measurements of a right triangle with side lengths: 3 4 5?" the applications should return " <angle> degrees, <angle> degrees, and <angle> degrees"
+
+* Any time someone asks "What is the velocity of a rock dropped from <height> meters just before it hits the ground?" the application will return the velocity of the rock.
+
+* Any time someone asks "What is the boiling temperature, in degrees fahrenheit, at <elevation> feet?" the application should return the temperature, in degrees at which water will boil

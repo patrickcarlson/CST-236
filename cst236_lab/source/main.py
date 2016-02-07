@@ -19,7 +19,8 @@
 """
 from source.question_answer import QA
 from source.shape_checker import get_triangle_type, get_squarerectangle_type, get_quadrilateral_type
-from source.jsanswers import get_current_time_date, get_nth_digit_fibonacci, get_nth_digit_pi, get_cat_color, get_vowel_count
+from source.answerfuncs import *
+#get_current_time_date, get_nth_digit_fibonacci, get_nth_digit_pi, get_cat_color, get_vowel_count
 import difflib, copy, getpass
 NOT_A_QUESTION_RETURN = "Was that a question?"
 UNKNOWN_QUESTION = "I don't know, please provide the answer"
@@ -51,7 +52,12 @@ class Interface(object):
             'What is the digit of pi' :QA('What is the digit of pi', get_nth_digit_pi),
             'What color is the kitten' :QA('What color is the kitten', get_cat_color),
             'How many vowels are in ' : QA('How many vowels are in', get_vowel_count),
-            'What is the airspeed velocity of a laden swallow' :QA('What is the airspeed velocity of a laden swallow', 'African or European?')
+            'What is the airspeed velocity of a laden swallow' :QA('What is the airspeed velocity of a laden swallow', 'African or European?'),
+            'What is the smallest amount of coins that can be returned for' :QA('What is  the smallest amount of coins that can be returned for', get_coin_return),
+            'What are the angle measurements of a right triangle with side lengths' :QA('What are the angle measurements of a right triangle with side lengths', get_triangle_angles),
+            'How many days until my birthday' : QA('How many days until my birthday', get_day_to_birthday),
+            'What is the velocity of a rock dropped from meters just before it hits the ground' : QA('What is the velocity of a rock dropped from meters just before it hits the ground', get_velocity_dropped_item),
+            'What is the boiling temperature, in degrees fahrenheit, at feet' : QA('What is the boiling temperature, in degrees fahrenheit, at feet', get_boiling_elevation)
         }
         self.question_answers = copy.deepcopy(self.question_answers_default)
 
