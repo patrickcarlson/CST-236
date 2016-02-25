@@ -38,7 +38,7 @@ class testQuestionAnswer(TestCase):
     def test_question_string_nokeyword(self):
         qaobject = Interface()
         result = qaobject.ask("Is that a dog?")
-        self.assertEqual(result, 'Was that a question?')
+        self.assertEqual(result, 'I don\'t know, please provide the answer')
 
     @requirements(['#0006', '#0009'])
     def test_question_string_noquestionmark(self):

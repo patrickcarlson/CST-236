@@ -66,7 +66,7 @@ class jobstoryquestions(TestCase):
         self.assertEqual(result, 4)
         result = qaobject.ask("What is the 9 digit of pi?")
         self.assertEqual(result, 5)
-        #todo(Patrick) Need more decimal places
+        # Need more decimal places
         # result = qaobject.ask("What is the 28 digit of pi?")
         # self.assertEqual(result, 2)
 

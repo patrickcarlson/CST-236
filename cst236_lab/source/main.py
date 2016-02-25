@@ -20,6 +20,7 @@
 from source.question_answer import QA
 from source.shape_checker import get_triangle_type, get_squarerectangle_type, get_quadrilateral_type
 from source.answerfuncs import *
+from source.git_utils import *
 #get_current_time_date, get_nth_digit_fibonacci, get_nth_digit_pi, get_cat_color, get_vowel_count
 import difflib, copy, getpass
 NOT_A_QUESTION_RETURN = "Was that a question?"
@@ -35,7 +36,7 @@ class Interface(object):
         self.where_dict = {}
         self.who_dict = {}
 
-        self.keywords = ['How', 'What', 'Where', 'Who', "Why"]
+        self.keywords = ['How', 'What', 'Where', 'Who', "Why", 'Is']
         self.question_mark = chr(0x3F)
 
         self.units = {'micrometers' : -6, 'millimeters' : -3, 'centimeters' : -2,
@@ -55,9 +56,14 @@ class Interface(object):
             'What is the airspeed velocity of a laden swallow' :QA('What is the airspeed velocity of a laden swallow', 'African or European?'),
             'What is the smallest amount of coins that can be returned for' :QA('What is  the smallest amount of coins that can be returned for', get_coin_return),
             'What are the angle measurements of a right triangle with side lengths' :QA('What are the angle measurements of a right triangle with side lengths', get_triangle_angles),
-            'How many days until my birthday' : QA('How many days until my birthday', get_day_to_birthday),
+#            'How many days until my birthday' : QA('How many days until my birthday', get_day_to_birthday),
             'What is the velocity of a rock dropped from meters just before it hits the ground' : QA('What is the velocity of a rock dropped from meters just before it hits the ground', get_velocity_dropped_item),
-            'What is the boiling temperature, in degrees fahrenheit, at feet' : QA('What is the boiling temperature, in degrees fahrenheit, at feet', get_boiling_elevation)
+            'What is the boiling temperature, in degrees fahrenheit, at feet' : QA('What is the boiling temperature, in degrees fahrenheit, at feet', get_boiling_elevation),
+            'Is the in the repo' : QA('Is the in the repo', is_file_in_repo),
+            'What is the status of' : QA('What is the status of', get_git_file_info),
+            'What is the deal with' : QA('What is the deal with', get_file_info),
+            'What branch is' : QA('What branch is', get_repo_branch),
+            'Where did come from' : QA('Where did come from', get_repo_url)
         }
         self.question_answers = copy.deepcopy(self.question_answers_default)
 
@@ -111,7 +117,24 @@ class Interface(object):
         else:
             parsed_question = ""
             args = []
-            if question.split(' ')[0] == 'How' and question.split(' ')[2] == 'vowels':
+            if question.split(' ')[0] == 'Is' and question.split(' ')[-1] == 'repo?':
+                i = 0
+                for keyword in question[:-1].split(' '):
+                    if i == 2:
+                        args.append(str(keyword))
+                        i += 1
+                    else:
+                        parsed_question += "{0} ".format(keyword)
+                        i += 1
+
+            elif '<' in question:
+                parsed_question += "{0} ".format(question.split('<')[0])
+                args.append(question.split('<')[1].split('>')[0])
+                if question.split('<')[1].split('>')[1] != '?':
+                    parsed_question += "{0} ".format(question.split('<')[1].split('>')[1])
+                else:
+                    parsed_question = parsed_question[:-1]
+            elif question.split(' ')[0] == 'How' and question.split(' ')[2] == 'vowels':
                 for keyword in question[:-1].split(' '):
                     if parsed_question.endswith(': '):
                         args.append(str(keyword))

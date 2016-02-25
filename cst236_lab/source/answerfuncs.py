@@ -105,24 +105,24 @@ def get_triangle_angles(a, b, c):
 
     return "90.0 degrees, " + str(round(angle, 2)) + " degrees, and " + str(round(90 - angle, 2)) + " degrees"
 
-"""
-#returns the number of days until the birthday indicated
-"""
-def get_day_to_birthday(month, day):
-    months = {1 : 0, 2 : 31, 3 : 59, 4 : 90, 5 : 120, 6 : 151, 7 : 181, 8 : 212, 9 : 243, 10 : 273, 11 : 304, 12 : 334}
-    bdaycount = months[month] + day
-    totaldays = 0
-    leapyear = (datetime.date.today().year - 2016) % 4 == 0
-    today = datetime.date.today().timetuple().tm_yday
-    if today > bdaycount:
-        totaldays = 365 - today + bdaycount
-    else:
-        totaldays = bdaycount - today
-
-    if leapyear and today < 60 and (bdaycount > 60 or bdaycount < today):
-        totaldays += 1
-
-    return totaldays
+# """
+# #returns the number of days until the birthday indicated
+# """
+# def get_day_to_birthday(month, day):
+#     months = {1 : 0, 2 : 31, 3 : 59, 4 : 90, 5 : 120, 6 : 151, 7 : 181, 8 : 212, 9 : 243, 10 : 273, 11 : 304, 12 : 334}
+#     bdaycount = months[month] + day
+#     totaldays = 0
+#     leapyear = (datetime.date.today().year - 2016) % 4 == 0
+#     today = datetime.date.today().timetuple().tm_yday
+#     if today > bdaycount:
+#         totaldays = 365 - today + bdaycount
+#     else:
+#         totaldays = bdaycount - today
+#
+#     if leapyear and today < 60 and (bdaycount > 60 or bdaycount < today):
+#         totaldays += 1
+#
+#     return totaldays
 
 """
 #returns velocity of an object released from a specific height, after falling a set distance
