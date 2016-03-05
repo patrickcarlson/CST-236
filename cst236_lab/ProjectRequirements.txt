@@ -50,6 +50,16 @@
 
 #0052 The system shall output questions and answers to the log file in under 50 ms
 
+#0053 The system shall process the question "What is the velocity of a rock dropped from <> meters just before it hits the ground." in less than 1 ms
+
+#0054 The system shall process the question "What type of triangle is x x x?" is less than 1 ms.
+
+#0055 The system shall process the question "What is the boiling temperature, in degrees fahrenheit, at 5000 feet?" in under 80 ms.
+
+#0056 The system shall process the question "What is the smallest amount of coins that can be returned for 5 dollars?" in under 50 ms.
+
+#0057 The system shall process the question "How many vowels are in Kalamazoo?" in less than 50 ms
+
 #0100 The system shall return 'Yes' or 'No' when asked 'Is the <file path> in the repo?'
 
 #0101 The system shall return one of the following when asked 'What is the status of <file path>?'
