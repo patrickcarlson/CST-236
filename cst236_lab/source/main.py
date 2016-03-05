@@ -22,7 +22,7 @@ from source.shape_checker import get_triangle_type, get_squarerectangle_type, ge
 from source.answerfuncs import *
 from source.git_utils import *
 #get_current_time_date, get_nth_digit_fibonacci, get_nth_digit_pi, get_cat_color, get_vowel_count
-import difflib, copy, getpass
+import difflib, copy, getpass, time
 NOT_A_QUESTION_RETURN = "Was that a question?"
 UNKNOWN_QUESTION = "I don't know, please provide the answer"
 NO_QUESTION = 'Please ask a question first'
@@ -156,7 +156,12 @@ class Interface(object):
                         return answer.value
                     else:
                         try:
-                            return answer.function(*args)
+                         #   start_time = time.clock()
+                            returnanswer = answer.function(*args)
+                            logfile = open('PerfLog.txt', 'a')
+                            logfile.write(question + " : " + str(returnanswer) + "\n")
+                     #       totaltime = (time.clock() - start_time)
+                            return returnanswer
                         except:
                             raise Exception("Too many extra parameters")
             else:

@@ -1,3 +1,22 @@
+"""
+* Author:				Patrick Carlson
+* Date Created:			02/13/2016
+* Last Modification Date:	02/24/2016
+* Assignment Number:    CST 236 Lab 5
+* Filename:				git_utils_test.py
+*
+* Overview:
+*	git_utils_test.py runs test code on git_utils.py. The tests work by mocking
+*   specific portions of git_utils, specifically the subprocess method, in
+*   order to run these tests.
+*
+* Input:
+*	Based on requirements provided for testing git_utils.py
+*
+* Output:
+*	Will generate report in console concerning passing of tests, and html report concerning
+*   coverage of code from the tests.
+"""
 from source.main import Interface
 from source import git_utils
 from unittest import TestCase
@@ -10,7 +29,7 @@ class gitutilstests(TestCase):
     @patch('source.git_utils.subprocess.Popen')
     def test_git_util_file_path_abs_bool(self, mock_subproc_popen):
         p_mock = mock.Mock()
-        attrs = {'communicate.return_value' : ('', ' ')}
+        attrs = {'communicate.return_value' : ('', '')}
         p_mock.configure_mock(**attrs)
         mock_subproc_popen.return_value = p_mock
         qaobject = Interface()
@@ -21,13 +40,12 @@ class gitutilstests(TestCase):
     @patch('source.git_utils.subprocess.Popen')
     def test_git_util_file_path_exists_bool(self, mock_subproc_popen):
         p_mock = mock.Mock()
-        attrs = {'communicate.return_value' : ('Output', 'Error')}
+        attrs = {'communicate.return_value' : ('', '')}
         p_mock.configure_mock(**attrs)
         mock_subproc_popen.return_value = p_mock
         qaobject = Interface()
         result = qaobject.ask("Is the ProjectRequirements.txt in the repo?")
         self.assertEqual(result, 'Yes')
-
 
     @requirements(['#0100'])
     @patch('source.git_utils.subprocess.Popen')
@@ -81,6 +99,7 @@ class gitutilstests(TestCase):
         qaobject = Interface()
         result = qaobject.ask("What is the status of <didntcommit.txt>?")
         self.assertEqual(result, 'didntcommit.txt has been not been checked in')
+        self.assertRaises(Exception, git_utils.get_git_file_info, 'X/:somethingnottrue')
 
     @requirements(['#0101'])
     @patch('source.git_utils.subprocess.Popen')
@@ -216,13 +235,9 @@ class gitutilstests(TestCase):
     @requirements(['#0101'])
     @patch('source.git_utils.subprocess.Popen')
     def test_git_utils_get_repo_completeness(self, mock_subproc_popen):
-        attrs = {'communicate.return_value' : ('C:/Users/Pat/Documents/School/CST236/PatrickC', '')}
+        attrs = {'communicate.return_value' : (__file__, '')}
         p_mock = mock.Mock()
         p_mock.configure_mock(**attrs)
         mock_subproc_popen.return_value = p_mock
         something = git_utils.get_repo_root('ProjectRequirements.txt')
-        self.assertEqual(something, 'C:\\Users\\Pat\\Documents\\School\\CST236\\PatrickC')
-
-    @requirements(['#0101'])
-    def test_git_utils_check_valid_path_exception(self):
-        self.assertRaises(Exception, git_utils.get_git_file_info, 'X/:somethingnottrue')
+        self.assertEqual(something, __file__)
