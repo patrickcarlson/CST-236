@@ -1,6 +1,6 @@
 #pylint: disable=invalid-name, missing-docstring
 #pylint: disable=anomalous-unicode-escape-in-string, anomalous-backslash-in-string
-# disabled due to names describing the function/class, anomalous portions part of input string
+# disabled due to names describing the function/class, anomalous portions part of input string fix
 """
 * Author:				Patrick Carlson
 * Date Created:			02/13/2016
