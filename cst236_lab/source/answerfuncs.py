@@ -21,60 +21,68 @@
 """
 
 from math import sqrt, pi, floor, atan, log
-import time, random, datetime
+import time
+import random
 from decimal import Decimal
 
 
-"""
-#returns current time and date based on local.
-"""
 def get_current_time_date():
+    """Returns current date and time"""
     localtime = time.strftime('%c')
     return localtime
 
-"""
-#returns nth digit of fibonacci sequence. n is argument provided.
-#Fibonacci equation is Fn = ((1 + 5^(1/2))^n - (1 - 5^(1/2))^n) / (2^n * 5^(1/2))
-"""
-def get_nth_digit_fibonacci(n=0):
-    if n > 0 and float.is_integer(n):
-        digit = ((1 + sqrt(5)) ** n - (1 - sqrt(5)) ** n) / (2 ** n * sqrt(5))
+
+def get_nth_digit_fibonacci(digit=0):
+    """
+    #returns nth digit of fibonacci sequence. n is argument provided.
+    #Fibonacci equation is Fn = ((1 + 5^(1/2))^n - (1 - 5^(1/2))^n) / (2^n * 5^(1/2))
+    """
+    if digit > 0 and float.is_integer(digit):
+        digit = ((1 + sqrt(5)) ** digit - (1 - sqrt(5)) ** digit) / (2 ** digit * sqrt(5))
         return int(digit)
     else:
         return 'invalid'
 
 
-"""
-#returns nth digit of pi. if n provided has decimal digits, returns invalid
-"""
-def get_nth_digit_pi(n = 0):
+
+def get_nth_digit_pi(digit=0):
+    """
+    #returns nth digit of pi. if n provided has decimal digits, returns invalid
+    """
 
 #todo(Patrick) Not getting enough digits out of pi, import a .txt with million?
-    if n > 0 and float.is_integer(n):
-        n = int(n)
-        digit = (Decimal(pi) * 10**(n-1)) % 10
+    if digit > 0 and float.is_integer(digit):
+        digit = int(digit)
+        digit = (Decimal(pi) * 10 ** (digit - 1)) % 10
         digit = Decimal(digit) - Decimal(digit) % 1
         return digit
     else:
         return 'invalid'
 
 def get_cat_color():
+    """
+    #returns random color of a cat.
+    """
     colors = ['White', 'Brown', 'Blue', 'Green', 'Purple', 'Orange', 'Black']
     index = random.randint(0, 6)
     return colors[index]
 
 def get_vowel_count(word):
+    """
+    #Returns total number of vowels in a string.
+    """
     vowels = ['a', 'e', 'i', 'o', 'u']
     vcount = 0
-    for c in word:
-        if c.lower() in vowels:
+    for count in word:
+        if count.lower() in vowels:
             vcount += 1
     return vcount
 
-"""
-#returns smallest amount of coins for change.
-"""
+
 def get_coin_return(total):
+    """
+    #returns smallest amount of coins for change.
+    """
     total *= 100
     amount = [25, 10, 5, 1]
     coins = [0, 0, 0, 0]
@@ -84,15 +92,18 @@ def get_coin_return(total):
         total -= coins[i] * divisor
         i += 1
 
-    finaltally = str(int(coins[0])) + ' quarters, ' + str(int(coins[1])) + ' dimes, ' + str(int(coins[2])) + ' nickels, and ' + str(int(coins[3])) + ' pennies.'
+    finaltally = str(int(coins[0])) + ' quarters, ' + str(int(coins[1])) + ' dimes, '\
+                 + str(int(coins[2])) + ' nickels, and ' + str(int(coins[3])) + ' pennies.'
+
     return finaltally
 
-"""
-#returns angles of a right triangle. side1 is treated as adjacent and side2 is
-#treated as opposite of angle.
-"""
-def get_triangle_angles(a, b, c):
-    sides = [a, b, c]
+
+def get_triangle_angles(sidea, sideb, sidec):
+    """
+    #returns angles of a right triangle. side1 is treated as adjacent and side2 is
+    #treated as opposite of angle.
+    """
+    sides = [sidea, sideb, sidec]
     hypotenuse = max(sides)
     sides.remove(hypotenuse)
     side1 = min(sides)
@@ -103,13 +114,15 @@ def get_triangle_angles(a, b, c):
     angle = atan(side2/side1)
     angle = angle * 180/pi
 
-    return "90.0 degrees, " + str(round(angle, 2)) + " degrees, and " + str(round(90 - angle, 2)) + " degrees"
+    return "90.0 degrees, " + str(round(angle, 2)) + " degrees, and " +\
+           str(round(90 - angle, 2)) + " degrees"
 
 # """
 # #returns the number of days until the birthday indicated
 # """
 # def get_day_to_birthday(month, day):
-#     months = {1 : 0, 2 : 31, 3 : 59, 4 : 90, 5 : 120, 6 : 151, 7 : 181, 8 : 212, 9 : 243, 10 : 273, 11 : 304, 12 : 334}
+#     months = {1 : 0, 2 : 31, 3 : 59, 4 : 90, 5 : 120, 6 : 151,
+#               7 : 181, 8 : 212, 9 : 243, 10 : 273, 11 : 304, 12 : 334}
 #     bdaycount = months[month] + day
 #     totaldays = 0
 #     leapyear = (datetime.date.today().year - 2016) % 4 == 0
@@ -124,23 +137,25 @@ def get_triangle_angles(a, b, c):
 #
 #     return totaldays
 
-"""
-#returns velocity of an object released from a specific height, after falling a set distance
-"""
+
 def get_velocity_dropped_item(height):
+    """
+    #returns velocity of an object released from a specific height, after falling a set distance
+    """
     velocity = sqrt(2*9.8*height)
     return velocity
 
-"""
-#returns the temperature at which water will boil at a given eleveation(feet)
-"""
+
 def get_boiling_elevation(altitude):
+    """
+    #returns the temperature at which water will boil at a given eleveation(feet)
+    """
     pressure = 29.921 * (1 - .0000068753 * altitude)**5.2559
     boilingelevation = 49.161 * log(pressure) + 44.932
 
     return round(boilingelevation, 2)
-#Pressure (in. Hg) = 29.921* (1-6.8753*0.000001 * altitude, ft.)^5.2559
-#Boiling point = 49.161 * Ln (in. Hg) + 44.932
+    #Pressure (in. Hg) = 29.921* (1-6.8753*0.000001 * altitude, ft.)^5.2559
+    #Boiling point = 49.161 * Ln (in. Hg) + 44.932
 
 
 

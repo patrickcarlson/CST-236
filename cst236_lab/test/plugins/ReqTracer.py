@@ -1,3 +1,5 @@
+#pylint: disable=redefined-outer-name
+# variable name provides
 """
 * Author:				Patrick Carlson
 * Date Created:			N/A
@@ -19,21 +21,29 @@
 *
 """
 
-import logging
-import os
+
 
 from nose2.events import Plugin
 
-class RequirementTraceOutput(Plugin):
+class RequirementTraceOutput(Plugin):   #pylint: disable=no-init
+                                        #No init required
+    """
+    RequirementTraceOutput writes trace to text file
+    """
 
     configSection = 'req-tracer'
 
-    def afterSummaryReport(self, event):
-        with open('TraceOutput.txt', 'w') as f:
+    def aftersummaryreport(self):
+        """
+        Writes requirements, and associated test functions to TraceOutput.txt
+        :param event:
+        :return:
+        """
+        with open('TraceOutput.txt', 'w') as writefile:
             for key, item in sorted(Requirements.items()):
-                f.write(key + ' ' + str(item.func_name) + '\n')
+                writefile.write(key + ' ' + str(item.func_name) + '\n')
             for item in Stories:
-                f.write(item.JStext + ' ' + str(item.func_name) + '\n')
+                writefile.write(item.JStext + ' ' + str(item.func_name) + '\n')
 
 class RequirementTrace(object):
     req_text = ""

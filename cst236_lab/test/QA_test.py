@@ -1,3 +1,5 @@
+#pylint: disable=invalid-name, missing-docstring
+# disabled due to names describing the function/class
 """
 * Author:				Patrick Carlson
 * Date Created:			01/16/2016
@@ -22,8 +24,8 @@
 *   to each requirement.
 *
 """
-from source.main import Interface
 from unittest import TestCase
+from source.main import Interface
 from test.plugins.ReqTracer import requirements
 
 class testQuestionAnswer(TestCase):

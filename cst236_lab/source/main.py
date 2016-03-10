@@ -7,9 +7,9 @@
 *
 * Overview:
 *	main.py contains the Interface object, created by Josh Kimball, which is used as
- *  a question and answer system. It supports a number of known questions and requests, but
- *  can also be taught answers to questions. Example code used as a template for this assignment provided by instructor Josh
-*   Kimbal
+*  a question and answer system. It supports a number of known questions and requests, but
+*  can also be taught answers to questions. Example code used as a template for this
+*  assignment provided by instructor Josh Kimbal
 *
 * Input:
 *	Input is in the form of strings from console.
@@ -17,20 +17,28 @@
 * Output:
 *	Strings, chars, or ints/floats to console as answers to questions provided in string form.
 """
+#pylint: disable=, missing-docstring
+# Implemented by other
+import difflib
+import copy
+import getpass
 from source.question_answer import QA
-from source.shape_checker import get_triangle_type, get_squarerectangle_type, get_quadrilateral_type
-from source.answerfuncs import *
-from source.git_utils import *
-#get_current_time_date, get_nth_digit_fibonacci, get_nth_digit_pi, get_cat_color, get_vowel_count
-import difflib, copy, getpass, time
+from source.shape_checker import get_triangle_type, get_quadrilateral_type
+from source.answerfuncs import get_current_time_date, get_nth_digit_pi, get_nth_digit_fibonacci, \
+    get_cat_color, get_vowel_count, get_coin_return, get_triangle_angles, \
+    get_velocity_dropped_item, get_boiling_elevation
+from source.git_utils import  is_file_in_repo, get_git_file_info, get_file_info, get_repo_branch, \
+    get_repo_url
+
+
 NOT_A_QUESTION_RETURN = "Was that a question?"
 UNKNOWN_QUESTION = "I don't know, please provide the answer"
 NO_QUESTION = 'Please ask a question first'
 NO_TEACH = 'I don\'t know about that. I was taught differently'
 
 
-class Interface(object):
-    def __init__(self):
+class Interface(object):  #pylint: disable=too-many-instance-attributes
+    def __init__(self):   #Implemented by other
         self.how_dict = {}
         self.what_dict = {}
         self.where_dict = {}
@@ -47,16 +55,24 @@ class Interface(object):
 
         self.question_answers_default = {
             'What type of triangle is ': QA('What type of triangle is ', get_triangle_type),
-            'What type of quadrilateral is ': QA('What type of quadrilateral is ', get_quadrilateral_type),
+            'What type of quadrilateral is ': QA('What type of quadrilateral is ',
+                                                 get_quadrilateral_type),
             'What time is it' :QA('What time is it', get_current_time_date),
-            'What is the digit of fibonacci' :QA('What is the digit of fibonacci', get_nth_digit_fibonacci),
+            'What is the digit of fibonacci' :QA('What is the digit of fibonacci',
+                                                 get_nth_digit_fibonacci),
             'What is the digit of pi' :QA('What is the digit of pi', get_nth_digit_pi),
             'What color is the kitten' :QA('What color is the kitten', get_cat_color),
             'How many vowels are in ' : QA('How many vowels are in', get_vowel_count),
-            'What is the airspeed velocity of a laden swallow' :QA('What is the airspeed velocity of a laden swallow', 'African or European?'),
-            'What is the smallest amount of coins that can be returned for' :QA('What is  the smallest amount of coins that can be returned for', get_coin_return),
-            'What are the angle measurements of a right triangle with side lengths' :QA('What are the angle measurements of a right triangle with side lengths', get_triangle_angles),
-#            'How many days until my birthday' : QA('How many days until my birthday', get_day_to_birthday),
+            'What is the airspeed velocity of a laden swallow' :
+                QA('What is the airspeed velocity of a laden swallow', 'African or European?'),
+            'What is the smallest amount of coins that can be returned for' :
+                QA('What is  the smallest amount of coins that can be returned for',
+                   get_coin_return),
+            'What are the angle measurements of a right triangle with side lengths' :
+                QA('What are the angle measurements of a right triangle with side lengths',
+                   get_triangle_angles),
+#           'How many days until my birthday' : QA('How many days until my birthday', get_day_to_birthday), #pylint: disable=line-too-long, bad-continuation
+                                                                                                            #Broken birthday function removed for continuity
             'What is the velocity of a rock dropped from meters just before it hits the ground' : QA('What is the velocity of a rock dropped from meters just before it hits the ground', get_velocity_dropped_item),
             'What is the boiling temperature, in degrees fahrenheit, at feet' : QA('What is the boiling temperature, in degrees fahrenheit, at feet', get_boiling_elevation),
             'Is the in the repo' : QA('Is the in the repo', is_file_in_repo),
@@ -80,21 +96,21 @@ class Interface(object):
             return
 
         if request.lower() == "open the door hal":
-            return ("I'm afraid I can't do that " + getpass.getuser())
+            return "I'm afraid I can't do that " + getpass.getuser()
 
         if request.split(' ')[0] == 'Convert':
-            numAmount = float(request.split(' ')[1])
-            fromUnit = request.split(' ')[2].lower()
-            toUnit = request.split(' ')[4].lower()
-            if fromUnit and toUnit in self.units.keys():
-                exponent = self.units.get(fromUnit) - self.units.get(toUnit)
-                returnValue = numAmount * 10**exponent
-                returnValue = str('{:.16f}'.format(returnValue))
-                while returnValue[-1] == '0':
-                    returnValue = returnValue[:-1]
-                if returnValue[-1] == '.':
-                    returnValue = returnValue + '0'
-                return returnValue + ' ' + toUnit
+            numamount = float(request.split(' ')[1])
+            fromunit = request.split(' ')[2].lower()
+            tounit = request.split(' ')[4].lower()
+            if fromunit and tounit in self.units.keys():
+                exponent = self.units.get(fromunit) - self.units.get(tounit)
+                returnvalue = numamount * 10**exponent
+                returnvalue = str('{:.16f}'.format(returnvalue))
+                while returnvalue[-1] == '0':
+                    returnvalue = returnvalue[:-1]
+                if returnvalue[-1] == '.':
+                    returnvalue = returnvalue + '0'
+                return returnvalue + ' ' + tounit
             else:
                 return "Unknown unit"
 
@@ -104,7 +120,8 @@ class Interface(object):
             return 'Hoo Hoo'
 
 
-    def ask(self, question=""):
+    def ask(self, question=""):    #pylint: disable=too-many-branches
+                                   #Implemented by other
         if not isinstance(question, str):
             self.last_question = None
             raise Exception('Not A String!')
@@ -145,7 +162,8 @@ class Interface(object):
                 for keyword in question[:-1].split(' '):
                     try:
                         args.append(float(keyword))
-                    except:
+                    except:     #pylint: disable=bare-except
+                                #Implemented by other
                         parsed_question += "{0} ".format(keyword)
 
             parsed_question = parsed_question[0:-1]
@@ -156,15 +174,14 @@ class Interface(object):
                         return answer.value
                     else:
                         try:
-                         #   start_time = time.clock()
                             returnanswer = answer.function(*args)
                             logfile = open('PerfLog.txt', 'a')
                             logfile.write(question + " : " + str(returnanswer) + "\n")
-                     #       totaltime = (time.clock() - start_time)
                             return returnanswer
                         except:
                             raise Exception("Too many extra parameters")
-            else:
+            else: #pylint: disable=useless-else-on-loop
+                  #Implemented by other
                 return UNKNOWN_QUESTION
 
     def teach(self, answer=""):

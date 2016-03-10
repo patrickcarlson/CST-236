@@ -21,158 +21,156 @@
 """
 
 
-def get_triangle_type(a=0, b=0, c=0):
+def get_triangle_type(sidea=0, sideb=0, sidec=0):
     """
     Determine if the given triangle is equilateral, scalene or Isosceles
 
-    :param a: line a
-    :type a: float or int or tuple or list or dict
+    :param sidea: line a
+    :type sidea: float or int or tuple or list or dict
 
-    :param b: line b
-    :type b: float
+    :param sideb: line b
+    :type sideb: float
 
-    :param c: line c
-    :type c: float
+    :param sidec: line c
+    :type sidec: float
 
     :return: "equilateral", "isosceles", "scalene" or "invalid"
     :rtype: str
     """
-    if isinstance(a, (tuple, list)) and len(a) == 3:
-        c = a[2]
-        b = a[1]
-        a = a[0]
+    if isinstance(sidea, (tuple, list)) and len(sidea) == 3:
+        sidec = sidea[2]
+        sideb = sidea[1]
+        sidea = sidea[0]
 
-    if isinstance(a, dict) and len(a.keys()) == 3:
+    if isinstance(sidea, dict) and len(sidea.keys()) == 3:     #pylint: disable=maybe-no-member
         values = []
-        for value in a.values():
+        for value in sidea.values():     #pylint: disable=maybe-no-member
             values.append(value)
-        a = values[0]
-        b = values[1]
-        c = values[2]
+        sidea = values[0]
+        sideb = values[1]
+        sidec = values[2]
 
-    if not (isinstance(a, (int, float)) and isinstance(b, (int, float)) and isinstance(c, (int, float))):
+    if not (isinstance(sidea, (int, float)) and
+            isinstance(sideb, (int, float)) and isinstance(sidec, (int, float))):
+
         return "invalid"
 
-    if a <= 0 or b <= 0 or c <= 0:
+    if sidea <= 0 or sideb <= 0 or sidec <= 0:
         return "invalid"
 
-    if a == b and b == c:
+    if sidea == sideb and sideb == sidec:
         return "equilateral"
 
-    elif a == b or a == c or b == c:
+    elif sidea == sideb or sidea == sidec or sideb == sidec:
         return "isosceles"
     else:
         return "scalene"
 
-def get_squarerectangle_type(a=0, b=0, c=0, d=0):
+def get_squarerectangle_type(sidea=0, sideb=0, sidec=0, sided=0):
     """
 
     Determine if the provided quadrilateral is a Square or Rectangle
 
-    :param a: line a
+    :param sidea: line a
     :type float or int
 
-    :param b: line b
+    :param sideb: line b
     :type float or int
 
-    :param c: line c
+    :param sidec: line c
     :type float or int
 
-    :param d: line d
+    :param sided: line d
     :type float or int
 
     :return: str
     """
 
-    if not (isinstance(a, (int, float)) and isinstance(b, (int, float)) and isinstance(c, (int, float)) and isinstance(d, (int, float))):
+    if not (isinstance(sidea, (int, float)) and isinstance(sideb, (int, float)) and
+            isinstance(sidec, (int, float)) and isinstance(sided, (int, float))):
+
         return "invalid"
 
-    if a <= 0 or b <= 0 or c <= 0 or d <= 0:
+    if sidea <= 0 or sideb <= 0 or sidec <= 0 or sided <= 0:
         return "invalid"
 
-    if a == b and b == c and c == d:
+    if sidea == sideb and sideb == sidec and sidec == sided:
         return "square"
 
-    if a == c and b == d:
+    if sidea == sidec and sideb == sided:
         return "rectangle"
 
     else:
         return "invalid"
 
-def get_quadrilateral_type(a=0, b=0, c=0, d=0, ab=0, bc=0, cd=0, da=0):
+def get_quadrilateral_type(sidea=0, sideb=0, sidec=0, sided=0,  #pylint: disable=too-many-arguments, too-many-return-statements
+                           angleab=0, anglebc=0, anglecd=0, angleda=0):  #required for operation
+
     """
 
     Determine if the provided quadrilateral is a square, rectangle, or rhombus.
-    :param a: line 1
+    :param sidea: line 1
     :type float or int
 
-    :param b: line 2
+    :param sideb: line 2
     :type float or int
 
-    :param c: line 3
+    :param sidec: line 3
     :type float or int
 
-    :param d: line 4
+    :param sided: line 4
     :type float or int
 
-    :param ab: angle ab
+    :param angleab: angle ab
     :type float or int
 
-    :param bc: angle bc
+    :param anglebc: angle bc
     :type float or int
 
-    :param cd: angle cd
+    :param anglecd: angle cd
     :type float or int
 
-    :param da: angle da
+    :param angleda: angle da
     :type float or int
 
     :return: str
     """
+    if not (isinstance(sidea, (int, float)) and isinstance(sideb, (int, float)) and
+            isinstance(sidec, (int, float)) and isinstance(sided, (int, float))):
 
-    """
-    " Check that inputted value is float or int. return invalid if not
-    """
-    if not (isinstance(a, (int, float)) and isinstance(b, (int, float)) and isinstance(c, (int, float)) and isinstance(d, (int, float))):
         return 'invalid'
 
-    """
-    " Check that inputted value is float or int. return invalid if not
-    """
-    if not (isinstance(ab, (int, float)) and isinstance(bc, (int, float)) and isinstance(cd, (int, float)) and isinstance(da, (int, float))):
+    if not (isinstance(angleab, (int, float)) and isinstance(anglebc, (int, float)) and
+            isinstance(anglecd, (int, float)) and isinstance(angleda, (int, float))):
+
         return 'invalid'
 
-    """
-    " Check that inputted side values are greater than zero. return invalid if not
-    """
-    if a <= 0 or b <= 0 or c <= 0 or d <= 0:
-        return 'invalid'
-    """
-    " Check that inputted angle values are greater than zero. return invalid if not
-    """
-    if ab <= 0 or bc <= 0 or cd <= 0 or da <= 0:
+
+    if sidea <= 0 or sideb <= 0 or sidec <= 0 or sided <= 0:
         return 'invalid'
 
-    """
-    " Check that inputted angle values are less than 180 degrees. return invalid if not
-    """
-    if ab >= 180 or bc >= 180 or cd >= 180 or da >= 180:
+    if angleab <= 0 or anglebc <= 0 or anglecd <= 0 or angleda <= 0:
         return 'invalid'
 
-    """
-    " Check whether inputted values represent a parrallelogram instead of a rhombus. If
-    " True, return invalid.
-    """
-    if ab != 90 and ab + bc == 180 and cd + da == 180 and a != b and a == c and b == d:
+
+    if angleab >= 180 or anglebc >= 180 or anglecd >= 180 or angleda >= 180:
         return 'invalid'
 
-    if a == b and b == c and c == d and ab == 90 and bc == 90 and cd == 90 and da == 90:
+
+    if (angleab != 90 and angleab + anglebc == 180 and anglecd + angleda == 180 and #pylint: disable=too-many-boolean-expressions
+            sidea != sideb and sidea == sidec and sideb == sided):
+        return 'invalid'
+
+    if (sidea == sideb and sideb == sidec and sidec == sided and angleab == 90 and #pylint: disable=too-many-boolean-expressions
+            anglebc == 90 and anglecd == 90 and angleda == 90):
         return 'square'
 
-    if a == c and b == d and ab == 90 and bc == 90 and cd == 90 and da == 90:
+    if (sidea == sidec and sideb == sided and angleab == 90 and #pylint: disable=too-many-boolean-expressions
+            anglebc == 90 and anglecd == 90 and angleda == 90):
         return 'rectangle'
 
-    if a == b and b == c and c == d and ab == cd and bc == da and ab + bc == 180:
+    if (sidea == sideb and sideb == sidec and sidec == sided and #pylint: disable=too-many-boolean-expressions
+            angleab == anglecd and anglebc == angleda and angleab + anglebc == 180):
         return 'rhombus'
 
     else:

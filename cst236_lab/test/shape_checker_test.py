@@ -1,3 +1,5 @@
+#pylint: disable=invalid-name, missing-docstring
+# disabled due to names describing the function
 """
 * Author:				Patrick Carlson
 * Date Created:			N/A
@@ -22,11 +24,14 @@
 *   test applies to each requirement in TraceOutput.txt.
 *
 """
-from source.shape_checker import get_triangle_type, get_squarerectangle_type, get_quadrilateral_type
 from unittest import TestCase
+from source.shape_checker import get_triangle_type, get_squarerectangle_type, get_quadrilateral_type
 from test.plugins.ReqTracer import requirements
 
 class TestGetTriangleType(TestCase):
+    """
+    Tests for shape checker gettriangletype function
+    """
 
 
     @requirements(['#0001', '#0002'])
@@ -66,11 +71,11 @@ class TestGetTriangleType(TestCase):
         result = get_triangle_type('a', "DEADBEEF", 'Z')
         self.assertEqual(result, 'invalid')
 
-class TestGetSquareRectangleType(TestCase) :
+class TestGetSquareRectangleType(TestCase):
 
     @requirements(['#0003', '#0004'])
     def test_get_squarerectangle_lessthanzero_all_int(self):
-        result = get_squarerectangle_type(-1, -1 , -1, -1)
+        result = get_squarerectangle_type(-1, -1, -1, -1)
         self.assertEqual(result, 'invalid')
 
     @requirements(['#0003', '#0004'])
@@ -98,7 +103,7 @@ class TestGetSquareRectangleType(TestCase) :
         result = get_squarerectangle_type(1, 2, 1, 3)
         self.assertEqual(result, 'invalid')
 
-class TestGetQuadrilateralType(TestCase) :
+class TestGetQuadrilateralType(TestCase):
 
     @requirements(['#0004', '#0005'])
     def test_get_quadrilateral_side_non_int_float(self):

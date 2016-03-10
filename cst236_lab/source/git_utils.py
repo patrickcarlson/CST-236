@@ -1,14 +1,37 @@
+"""
+* Author:				Unknown
+* Date Created:			Unknown
+* Last Modification Date:	Unknown
+* Assignment Number:    CST 236 Lab
+* Filename:				 git_utils.py
+*
+* Overview:
+*	git_utils.py provides command line input for the git utility.
+*
+* Input:
+*	calls to functions, with path of directory to be tested included
+*
+* Output:
+*	Will output errors for incorrect input, and will return status of different
+*   git elements, via string to console, depending on functions passed in.
+"""
 import logging
 import subprocess
 import os
 from functools import wraps
 
-git_logger = logging.getLogger(__name__)
+GIT_LOGGER = logging.getLogger(__name__)
 
 
 def check_valid_path(func):
+    """
+    checks that path provided is a valid path for os
+    """
     @wraps(func)
     def path_checker(path, *args, **kwargs):
+        """
+        Path checker function that tests for path
+        """
         if not os.path.exists(path):
             raise Exception('Path {0} does not exist cannot get git file '
                             'info'.format(path))
@@ -17,16 +40,16 @@ def check_valid_path(func):
 
 
 def is_file_in_repo(path):
-    # File must exist to be in the repo
+    """ File must exist to be in the repo"""
     if not os.path.exists(path):
-        git_logger.debug('%s does not exist therefore not in repo', path)
+        GIT_LOGGER.debug('%s does not exist therefore not in repo', path)
         return 'No'
     if not os.path.isabs(path):
         path = os.path.abspath(path)
     test_repo = os.path.dirname(path)
     if(path in get_diff_files(test_repo) or
        path in get_untracked_files(test_repo)):
-        git_logger.debug('%s changed or is untracked in repo %s', path, test_repo)
+        GIT_LOGGER.debug('%s changed or is untracked in repo %s', path, test_repo)
         return 'No'
     return 'Yes'
 
@@ -46,13 +69,13 @@ def get_git_file_info(path):
         path = os.path.abspath(path)
     test_repo = os.path.dirname(path)
     if path in get_diff_files(test_repo):
-        git_logger.warning('%s is modified locally', path)
+        GIT_LOGGER.warning('%s is modified locally', path)
         return '{} has been modified locally'.format(os.path.basename(path))
     elif path in get_untracked_files(test_repo):
-        git_logger.warning('%s is not checked in', path)
+        GIT_LOGGER.warning('%s is not checked in', path)
         return '{} has been not been checked in'.format(os.path.basename(path))
     elif is_repo_dirty(test_repo, include_untracked=True):
-        git_logger.warning('%s is contained in a dirty repo', path)
+        GIT_LOGGER.warning('%s is contained in a dirty repo', path)
         return '{} is a dirty repo'.format(os.path.basename(path))
 
     return '{} is up to date'.format(os.path.basename(path))
@@ -114,7 +137,8 @@ def has_untracked_files(path):
 
 
 @check_valid_path
-def get_file_info(path, full=False):
+def get_file_info(path, full=False): #pylint: disable=unused-argument
+                                     #implemented by other
     """
     Get the last commit information for the file specified
 
@@ -251,14 +275,13 @@ def git_execute(params=None, path=os.getcwd()):
     :return: The stdout from git
     :rtype: str
     """
-    p = subprocess.Popen(params,
-                         stdout=subprocess.PIPE,
-                         stderr=subprocess.PIPE, cwd=path,
-                         universal_newlines=True)
+    process = subprocess.Popen(params,
+                               stdout=subprocess.PIPE,
+                               stderr=subprocess.PIPE, cwd=path,
+                               universal_newlines=True)
 
-    stdout, stderr = p.communicate()
+    stdout, stderr = process.communicate()
     if stderr:
-        git_logger.error('Error occurred when executing git command(%s): %s', params,
+        GIT_LOGGER.error('Error occurred when executing git command(%s): %s', params,
                          stderr.strip())
     return stdout.strip()
-

@@ -1,3 +1,5 @@
+#pylint: disable=invalid-name, missing-docstring
+# disabled due to names describing the function/class
 """
 * Author:				Patrick Carlson
 * Date Created:			01/23/2016
@@ -15,51 +17,59 @@
 *	Output to console with number of tests, and whether succesful, also updates TraceOutput.txt
 *   with which tests correspeond with which project requirements.
 """
-import time, getpass
-from source.main import Interface
+import time
+import getpass
 from unittest import TestCase
-from test.plugins.ReqTracer import requirements, story
+from source.main import Interface
+from test.plugins.ReqTracer import story
 
 class jobstoryquestions(TestCase):
 
-    @story(['When I ask "What time is it?" I want to be given the current date/time so I can stay up to date'])
+    @story(['When I ask "What time is it?" I want to be given the current '
+            'date/time so I can stay up to date'])
     def test_question_current_time_date(self):
         qaobject = Interface()
         result = qaobject.ask("What time is it?")
         currenttime = time.strftime('%c')
         self.assertEqual(result, currenttime)
 
-    @story(['When I ask "What is the n digit of fibonacci" I want to receive the answer so I don\'t have to figure it out myself'])
+    @story(['When I ask "What is the n digit of fibonacci" I want to receive the answer so I don\'t'
+            ' have to figure it out myself'])
     def test_question_fibonacci_nthdigit(self):
         qaobject = Interface()
         result = qaobject.ask("What is the 8 digit of fibonacci?")
         self.assertEqual(result, 21)
 
-    @story(['When I ask "What is the n digit of fibonacci" I want to receive the answer so I don\'t have to figure it out myself'])
+    @story(['When I ask "What is the n digit of fibonacci" I want to receive the answer so I don\'t'
+            ' have to figure it out myself'])
     def test_question_fibonacci_nthdigit_float(self):
         qaobject = Interface()
         result = qaobject.ask("What is the 8.55 digit of fibonacci?")
         self.assertEqual(result, 'invalid')
 
-    @story(['When I ask "What is the n digit of fibonacci" I want to receive the answer so I don\'t have to figure it out myself'])
+    @story(['When I ask "What is the n digit of fibonacci" I want to receive the answer so I don\'t'
+            ' have to figure it out myself'])
     def test_question_fibonacci_negativeinput(self):
         qaobject = Interface()
         result = qaobject.ask("What is the -8 digit of fibonacci?")
         self.assertEqual(result, 'invalid')
 
-    @story(['When I ask "What is the n digit of pi" I want to receive the answer so I don\'t have to figure it out myself'])
+    @story(['When I ask "What is the n digit of pi" I want to receive the answer so I don\'t have'
+            ' to figure it out myself'])
     def test_question_pi_nthdigit_float(self):
         qaobject = Interface()
         result = qaobject.ask("What is the 3.5 digit of pi?")
         self.assertEqual(result, 'invalid')
 
-    @story(['When I ask "What is the n digit of pi" I want to receive the answer so I don\'t have to figure it out myself'])
+    @story(['When I ask "What is the n digit of pi" I want to receive the answer so I don\'t have'
+            ' to figure it out myself'])
     def test_question_pi_nthdigit_negative(self):
         qaobject = Interface()
         result = qaobject.ask("What is the -22 digit of pi?")
         self.assertEqual(result, 'invalid')
 
-    @story(['When I ask "What is the n digit of pi" I want to receive the answer so I don\'t have to figure it out myself'])
+    @story(['When I ask "What is the n digit of pi" I want to receive the answer so I don\'t have'
+            ' to figure it out myself'])
     def test_question_pi_nthdigit(self):
         qaobject = Interface()
         result = qaobject.ask("What is the 3 digit of pi?")
@@ -70,7 +80,8 @@ class jobstoryquestions(TestCase):
         # result = qaobject.ask("What is the 28 digit of pi?")
         # self.assertEqual(result, 2)
 
-    @story(['When I ask "Please clear memory" I was the application to clear user set questions and answers so I can reset the application'])
+    @story(['When I ask "Please clear memory" I was the application to clear user set questions'
+            ' and answers so I can reset the application'])
     def test_request_clearmemory(self):
         qaobject = Interface()
         qaobject.ask("What color is the cow?")
@@ -83,20 +94,23 @@ class jobstoryquestions(TestCase):
         result = qaobject.ask("What color is the cow?")
         self.assertEqual(result, "I don't know, please provide the answer")
 
-    @story(['When I say "Open the door hal", I want the application to say "I\'m afraid I can\'t do that <user name> so I know that is not an option'])
+    @story(['When I say "Open the door hal", I want the application to say "I\'m afraid I can\'t'
+            ' do that <user name> so I know that is not an option'])
     def test_request_hal_open_door(self):
         qaobject = Interface()
         result = qaobject.request("Open the door hal")
         halandusername = "I'm afraid I can't do that " + getpass.getuser()
         self.assertEqual(result, halandusername)
 
-    @story(['When I ask "Convert <number> <units> to <units>" I want to receive the converted value and units so I can know the answer.'])
+    @story(['When I ask "Convert <number> <units> to <units>" I want to receive the converted value'
+            ' and units so I can know the answer.'])
     def test_request_convert_units_single(self):
         qaobject = Interface()
         result = qaobject.request("Convert 10 meters to kilometers")
         self.assertEqual(result, "0.01 kilometers")
 
-    @story(['When I ask for a numberic conversion I want at least 10 different units I can convert from/to'])
+    @story(['When I ask for a numberic conversion I want at least 10 different units I can convert'
+            ' from/to'])
     def test_request_convert_units_tenunits(self):
         qaobject = Interface()
         result = qaobject.request("Convert 10 meters to kilometers")
@@ -122,7 +136,8 @@ class jobstoryquestions(TestCase):
 
 
 
-    @story(['When I ask for a numberic conversion I want at least 10 different units I can convert from/to'])
+    @story(['When I ask for a numberic conversion I want at least 10 different units I can'
+            ' convert from/to'])
     def test_request_convert_unknownunit(self):
         qaobject = Interface()
         result = qaobject.request("Convert 10 cups to gallons")
@@ -136,7 +151,8 @@ class jobstoryquestions(TestCase):
         result = qaobject.ask("What color is the kitten?")
         self.assertTrue(result in qaobject.colors)
 
-    @story(['When I ask "How many vowels are in: <word>?" I want a number telling me how many vowels are in the word.'])
+    @story(['When I ask "How many vowels are in: <word>?" I want a number telling me how many'
+            ' vowels are in the word.'])
     def test_ask_vowels_word(self):
         qaobject = Interface()
         result = qaobject.ask("How many vowels are in : Apple?")
@@ -148,14 +164,16 @@ class jobstoryquestions(TestCase):
         result = qaobject.request("Go Owls!")
         self.assertEqual(result, 'Hoo Hoo')
 
-    @story(['Any time someone requests "Go Owls" the last question should be set to "What is OIT?" and the answer should be "Oregon Institue of Technology'])
+    @story(['Any time someone requests "Go Owls" the last question should be set to "What is'
+            ' OIT?" and the answer should be "Oregon Institue of Technology'])
     def test_request_hoot_updateOIT(self):
         qaobject = Interface()
         qaobject.request("Go Owls!")
         result = qaobject.ask("What is OIT?")
         self.assertEqual(result, "Oregon Institute of Technology")
 
-    @story(['Any time someone asks "What is the airspeed velocity of a laden swallow" the application should ask whether european or african'])
+    @story(['Any time someone asks "What is the airspeed velocity of a laden swallow" the'
+            ' application should ask whether european or african'])
     def test_monty_python_swallow(self):
         qaobject = Interface()
         result = qaobject.ask("What is the airspeed velocity of a laden swallow?")
