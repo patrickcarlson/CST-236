@@ -65,7 +65,7 @@ class performancetests(TestCase):
     def test_performance_boiling_temperature(self):
         total_time = time_performance("What is the boiling temperature, "
                                       "in degrees fahrenheit, at 15000 feet?")
-        self.assertLess(total_time, .01)
+        self.assertLess(total_time, .03)
 
     @requirements(['#0056'])
     def test_performance_change_return(self):
