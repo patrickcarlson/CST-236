@@ -1,6 +1,6 @@
 #pylint: disable=invalid-name, missing-docstring
 #pylint: disable=anomalous-unicode-escape-in-string, anomalous-backslash-in-string
-# disabled due to names describing the function/class, anomalous portions part of input string fix
+# disabled due to names describing the function/class, anomalous portions part of input string
 """
 * Author:				Patrick Carlson
 * Date Created:			02/13/2016
@@ -28,6 +28,8 @@ from mock import mock, patch
 from source.main import Interface
 from source import git_utils
 from test.plugins.ReqTracer import requirements
+
+PARENT_DIRECTORY = __file__[:-23]
 
 class gitutilstests(TestCase):
 
@@ -80,11 +82,16 @@ class gitutilstests(TestCase):
     @requirements(['#0101'])
     @patch('source.git_utils.subprocess.Popen')
     def test_git_utils_path_status_localmod(self, mock_subproc_popen):
-        p_mock = mock.Mock()
-        attrs = {'communicate.return_value'
-                 : ('C:\Users\Pat\Documents\School\CST236\PatrickC\cst236_lab\didntcommit.txt', '')}
-        p_mock.configure_mock(**attrs)
-        mock_subproc_popen.return_value = p_mock
+        p_mock1 = mock.Mock()
+        attrs = {'communicate.return_value': ("didntcommit.txt", '')}
+        p_mock1.configure_mock(**attrs)
+        p_mock2 = mock.Mock()
+        attrs = {'communicate.return_value': (PARENT_DIRECTORY, '')}
+        p_mock2.configure_mock(**attrs)
+        p_mock3 = mock.Mock()
+        attrs = {'communicate.return_value': ('', '')}
+        p_mock3.configure_mock(**attrs)
+        mock_subproc_popen.side_effect = [p_mock1, p_mock2, p_mock3]
         qaobject = Interface()
         result = qaobject.ask("What is the status of <didntcommit.txt>?")
         self.assertEqual(result, 'didntcommit.txt has been modified locally')
@@ -102,7 +109,7 @@ class gitutilstests(TestCase):
         p_mock3 = mock.Mock()
         p_mock3.configure_mock(**attrs)
         attrs = {'communicate.return_value'
-                 : ('C:\Users\Pat\Documents\School\CST236\PatrickC\cst236_lab', '')}
+                 : (PARENT_DIRECTORY, '')}
         p_mock4 = mock.Mock()
         p_mock4.configure_mock(**attrs)
         mock_subproc_popen.side_effect = [p_mock1, p_mock2, p_mock3, p_mock4]
@@ -130,14 +137,14 @@ class gitutilstests(TestCase):
         p_mock5 = mock.Mock()
         p_mock5.configure_mock(**attrs)
         attrs = {'communicate.return_value'
-                 : ('C:\Users\Pat\Documents\School\CST236\PatrickC\cst236_lab', '')}
+                 : (PARENT_DIRECTORY, '')}
         p_mock6 = mock.Mock()
         p_mock6.configure_mock(**attrs)
         attrs = {'communicate.return_value' : ('didntcommit.txt', '')}
         p_mock7 = mock.Mock()
         p_mock7.configure_mock(**attrs)
         attrs = {'communicate.return_value'
-                 : ('C:\Users\Pat\Documents\School\CST236\PatrickC\cst236_lab', '')}
+                 : (PARENT_DIRECTORY, '')}
         p_mock8 = mock.Mock()
         p_mock8.configure_mock(**attrs)
         mock_subproc_popen.side_effect = [p_mock1, p_mock2, p_mock3, p_mock4,
@@ -152,7 +159,6 @@ class gitutilstests(TestCase):
         p_mock1 = mock.Mock()
         attrs = {'communicate.return_value' : ('', '')}
         p_mock1.configure_mock(**attrs)
-        attrs = {'communicate.return_value' : ('', '')}
         p_mock2 = mock.Mock()
         p_mock2.configure_mock(**attrs)
         attrs = {'communicate.return_value' : ('didntcommit.txt', '')}
@@ -161,10 +167,8 @@ class gitutilstests(TestCase):
         attrs = {'communicate.return_value' : ('', '')}
         p_mock4 = mock.Mock()
         p_mock4.configure_mock(**attrs)
-        attrs = {'communicate.return_value' : ('', '')}  #has_diff_files
         p_mock5 = mock.Mock()
         p_mock5.configure_mock(**attrs)
-        attrs = {'communicate.return_value' : ('', '')} #staged
         p_mock6 = mock.Mock()
         p_mock6.configure_mock(**attrs)
         attrs = {'communicate.return_value' : ('didntcommit.txt', '')} #get_untracked
@@ -182,32 +186,36 @@ class gitutilstests(TestCase):
     @requirements(['#0101'])
     @patch('source.git_utils.subprocess.Popen')
     def test_git_utils_path_status_noaction(self, mock_subproc_popen):
-        p_mock1 = mock.Mock()
+        # p_mock1 = mock.Mock()
+        # attrs = {'communicate.return_value' : ('', '')}
+        # p_mock1.configure_mock(**attrs)
+        # attrs = {'communicate.return_value' : ('', '')}
+        # p_mock2 = mock.Mock()
+        # p_mock2.configure_mock(**attrs)
+        # attrs = {'communicate.return_value' : ('', '')}
+        # p_mock3 = mock.Mock()
+        # p_mock3.configure_mock(**attrs)
+        # attrs = {'communicate.return_value' : ('', '')}
+        # p_mock4 = mock.Mock()
+        # p_mock4.configure_mock(**attrs)
+        # attrs = {'communicate.return_value' : ('', '')}
+        # p_mock5 = mock.Mock()
+        # p_mock5.configure_mock(**attrs)
+        # attrs = {'communicate.return_value' : ('', '')}
+        # p_mock6 = mock.Mock()
+        # p_mock6.configure_mock(**attrs)
+        # attrs = {'communicate.return_value' : ('', '')}
+        # p_mock7 = mock.Mock()
+        # p_mock7.configure_mock(**attrs)
+        # attrs = {'communicate.return_value' : ('', '')}
+        # p_mock8 = mock.Mock()
+        # p_mock8.configure_mock(**attrs)
+        # mock_subproc_popen.side_effect = [p_mock1, p_mock2, p_mock3, p_mock4,
+        #                                   p_mock5, p_mock6, p_mock7, p_mock8]
+        p_mock = mock.Mock()
         attrs = {'communicate.return_value' : ('', '')}
-        p_mock1.configure_mock(**attrs)
-        attrs = {'communicate.return_value' : ('', '')}
-        p_mock2 = mock.Mock()
-        p_mock2.configure_mock(**attrs)
-        attrs = {'communicate.return_value' : ('', '')}
-        p_mock3 = mock.Mock()
-        p_mock3.configure_mock(**attrs)
-        attrs = {'communicate.return_value' : ('', '')}
-        p_mock4 = mock.Mock()
-        p_mock4.configure_mock(**attrs)
-        attrs = {'communicate.return_value' : ('', '')}
-        p_mock5 = mock.Mock()
-        p_mock5.configure_mock(**attrs)
-        attrs = {'communicate.return_value' : ('', '')}
-        p_mock6 = mock.Mock()
-        p_mock6.configure_mock(**attrs)
-        attrs = {'communicate.return_value' : ('', '')}
-        p_mock7 = mock.Mock()
-        p_mock7.configure_mock(**attrs)
-        attrs = {'communicate.return_value' : ('', '')}
-        p_mock8 = mock.Mock()
-        p_mock8.configure_mock(**attrs)
-        mock_subproc_popen.side_effect = [p_mock1, p_mock2, p_mock3, p_mock4,
-                                          p_mock5, p_mock6, p_mock7, p_mock8]
+        p_mock.configure_mock(**attrs)
+        mock_subproc_popen.return_value = p_mock
         qaobject = Interface()
         result = qaobject.ask("What is the status of <didntcommit.txt>?")
         self.assertEqual(result, 'didntcommit.txt is up to date')
