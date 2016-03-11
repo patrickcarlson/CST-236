@@ -1,5 +1,3 @@
-#pylint: disable=invalid-name, missing-docstring
-# disabled due to names describing the function/class
 """
 * Author:				Patrick Carlson
 * Date Created:			01/16/2016
@@ -28,46 +26,77 @@ from unittest import TestCase
 from source.main import Interface
 from test.plugins.ReqTracer import requirements
 
-class testQuestionAnswer(TestCase):
+class TestQuestionAnswer(TestCase):
+    """
+    Test question answer functions
+    """
 
     @requirements(['#0006', '#0007'])
-    def test_question_string_attemptanswer(self):
+    def test_question_string_answer(self):
+        """
+        Check triangle return correct
+        :return:
+        """
         qaobject = Interface()
         result = qaobject.ask('What type of triangle is: 3 4 5?')
         self.assertEqual(result, 'scalene')
 
     @requirements(['#0006', '#0008'])
     def test_question_string_nokeyword(self):
+        """
+        Check returns proper output for unknown question.
+        :return:
+        """
         qaobject = Interface()
         result = qaobject.ask("Is that a dog?")
         self.assertEqual(result, 'I don\'t know, please provide the answer')
 
     @requirements(['#0006', '#0009'])
-    def test_question_string_noquestionmark(self):
+    def test_question_string_noqmark(self):
+        """
+        Check returns proper output for now question mark.
+        :return:
+        """
         qaobject = Interface()
         result = qaobject.ask("What type of triangle is: 3 3 3")
         self.assertEqual(result, 'Was that a question?')
 
     @requirements(['#0006', '#0010'])
     def test_question_string(self):
+        """
+        Check returns proper output for improper question
+        :return:
+        """
         qaobject = Interface()
         result = qaobject.ask("What_type_of_triangle_is: 3 3 3?")
         self.assertEqual(result, 'Was that a question?')
 
     @requirements(['#0005', '#0006', '#0007', '#0011'])
-    def test_question_90percentkeywordmatch(self):
+    def test_question_90percentmatch(self):
+        """
+        Check returns proper output for question 90% similar to stored question.
+        :return:
+        """
         qaobject = Interface()
         result = qaobject.ask("What type of quadrilteral is: 2 2 2 2 90 90 90 90?")
         self.assertEqual(result, 'square')
 
     @requirements(['#0006', '#0008', '#0011', '#0012'])
-    def test_question_excludenumbers_matchcode(self):
+    def test_question_number_placement(self):
+        """
+        Check returns correct answer when numbers are placed incorrectly.
+        :return:
+        """
         qaobject = Interface()
         result = qaobject.ask("What type 2 of trangle is: 2 2?")
         self.assertEqual(result, 'equilateral')
 
     @requirements(['#0001', '#0002', '#0006', '#0007', '#0013', '#0014'])
-    def test_question_validmatch_returnanswer(self):
+    def test_question_validmatch(self):
+        """
+        Check returns valid mathc for question answer
+        :return:
+        """
         qaobject = Interface()
         result = qaobject.ask("What of trangle is: 2 2 2?")
         self.assertEqual(result, 'I don\'t know, please provide the answer')
@@ -75,7 +104,11 @@ class testQuestionAnswer(TestCase):
         self.assertEqual(result, 'equilateral')
 
     @requirements(['#0015', '#0016'])
-    def test_question_answer_provideanswer(self):
+    def test_question_insert_answer(self):
+        """
+        Check returns correct answer after teach function.
+        :return:
+        """
         qaobject = Interface()
         result = qaobject.ask("What triangle is: 5, 6, 5?")
         self.assertEqual(result, 'I don\'t know, please provide the answer')
@@ -84,13 +117,21 @@ class testQuestionAnswer(TestCase):
         self.assertEqual(result, 'isosceles')
 
     @requirements(['#0017'])
-    def test_question_answer_nopreviousquestion(self):
+    def test_question_answer_noprevious(self):
+        """
+        Check returns proper output when no question mark.
+        :return:
+        """
         qaobject = Interface()
         result = qaobject.teach("How now brown cow.")
         self.assertEqual(result, 'Please ask a question first')
 
     @requirements(['#0018'])
-    def test_question_hasanswerfromprevious(self):
+    def test_question_hasanswer(self):
+        """
+        Check that can not cover question that has already been taught an answer.
+        :return:
+        """
         qaobject = Interface()
         qaobject.ask("What triangle is: 5, 6, 5?")
         qaobject.teach("isosceles")
@@ -101,6 +142,10 @@ class testQuestionAnswer(TestCase):
 
     @requirements(['#0019'])
     def test_question_updateanswer(self):
+        """
+        Check that correct function performs correctly.
+        :return:
+        """
         qaobject = Interface()
         qaobject.ask("What triangle is: 5, 6, 5?")
         qaobject.teach("scalene")
@@ -111,7 +156,11 @@ class testQuestionAnswer(TestCase):
         self.assertEqual(result, 'isosceles')
 
     @requirements(['#0020'])
-    def test_question_updateanswer_storepreviousquestion(self):
+    def test_question_update_previous(self):
+        """
+        Check that correct function works correctly
+        :return:
+        """
         qaobject = Interface()
         result = qaobject.ask("What color is the cow?")
         self.assertEqual(result, 'I don\'t know, please provide the answer')
@@ -123,23 +172,39 @@ class testQuestionAnswer(TestCase):
         self.assertEqual(result, 'The cow is red')
 
     @requirements(['#0021'])
-    def test_question_updateanswer_nopreviousquestion(self):
+    def test_question_update_noprevious(self):
+        """
+        Check that correct responds correctly when no previous question exists.
+        :return:
+        """
         qaobject = Interface()
         result = qaobject.correct("42")
         self.assertEqual(result, 'Please ask a question first')
 
     @requirements(['#0022'])
     def test_request_notastring(self):
+        """
+        Check that Exception is raised when request is not a string
+        :return:
+        """
         qaobject = Interface()
         self.assertRaises(Exception, qaobject.request, 2555)
 
     @requirements(['#0022'])
     def test_ask_notastring(self):
+        """
+        Check that Exception is raised when ask is not a string
+        :return:
+        """
         qaobject = Interface()
         self.assertRaises(Exception, qaobject.ask, 45566)
 
     @requirements(['#0023'])
     def test_ask_toomanyparamters(self):
+        """
+        Check that Exception is raised with too many parameters.
+        :return:
+        """
         qaobject = Interface()
         self.assertRaises(Exception, qaobject.ask, "What type of triangle is: 3 4 5 6?")
 

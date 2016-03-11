@@ -1,5 +1,3 @@
-#pylint: disable=invalid-name, missing-docstring
-# disabled due to names describing the function
 """
 * Author:				Patrick Carlson
 * Date Created:			02/27/2016
@@ -26,16 +24,28 @@ from source.main import Interface
 from test.plugins.ReqTracer import requirements
 
 def time_performance(question):
+    """
+    Performance counter function. Times time taken to complete operation
+    :param question: String
+    :return: float of total_time for question operation
+    """
     qaobject = Interface()
     start_time = time.clock()
     qaobject.ask(question)
     total_time = time.clock() - start_time
     return total_time
 
-class performancetests(TestCase):
+class PerformanceTests(TestCase):
+    """
+    Series of performance tests
+    """
 
     @requirements(['#0050', '#0051', '#0052'])
     def test_performance_logcheck(self):
+        """
+        Check that log constructs and that it happens in less than .05 seconds.
+        :return:
+        """
         qaobject = Interface()
         start_time = time.clock()
         qaobject.ask("How many vowels are in : Apple?")
@@ -51,29 +61,49 @@ class performancetests(TestCase):
         self.assertLess(total_time, .05)
 
     @requirements(['#0053'])
-    def test_performance_rock_drop_question(self):
+    def test_performance_rock_drop(self):
+        """
+        Check Performance, time, of rock drop question.
+        :return:
+        """
         total_time = time_performance("What is the velocity of a rock dropped from "
                                       "30 meters just before it hits the ground?")
         self.assertLess(total_time, .08)
 
     @requirements(['#0054'])
     def test_performance_triangle_type(self):
+        """
+        Check performance of triangle checker
+        :return:
+        """
         total_time = time_performance("What type of triangle is 2.5 2.5 2.5")
         self.assertLess(total_time, .001)
 
     @requirements(['#0055'])
-    def test_performance_boiling_temperature(self):
+    def test_performance_boiling_(self):
+        """
+        Check performance of boiling at elevation question
+        :return:
+        """
         total_time = time_performance("What is the boiling temperature, "
                                       "in degrees fahrenheit, at 15000 feet?")
         self.assertLess(total_time, .03)
 
     @requirements(['#0056'])
     def test_performance_change_return(self):
+        """
+        Check performance of coin return question
+        :return:
+        """
         total_time = time_performance("What is the smallest amount of coins that "
                                       "can be return for 5 dollars?")
         self.assertLess(total_time, .08)
 
     @requirements(['#0057'])
     def test_performance_vowel_count(self):
+        """
+        Check performance of vowel counting question.
+        :return:
+        """
         total_time = time_performance("How many vowels are in Kalamazoo?")
         self.assertLess(total_time, .05)

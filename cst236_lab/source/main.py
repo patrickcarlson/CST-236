@@ -17,8 +17,6 @@
 * Output:
 *	Strings, chars, or ints/floats to console as answers to questions provided in string form.
 """
-#pylint: disable=, missing-docstring
-# Implemented by other
 import difflib
 import copy
 import getpass
@@ -37,8 +35,12 @@ NO_QUESTION = 'Please ask a question first'
 NO_TEACH = 'I don\'t know about that. I was taught differently'
 
 
-class Interface(object):  #pylint: disable=too-many-instance-attributes
-    def __init__(self):   #Implemented by other
+class Interface(object):#pylint: disable=too-many-instance-attributes
+    """                 #Implemented by other
+    Interface class provides methods and members for the question
+    and answer functionality of this class.
+    """
+    def __init__(self):
         self.how_dict = {}
         self.what_dict = {}
         self.where_dict = {}
@@ -71,10 +73,12 @@ class Interface(object):  #pylint: disable=too-many-instance-attributes
             'What are the angle measurements of a right triangle with side lengths' :
                 QA('What are the angle measurements of a right triangle with side lengths',
                    get_triangle_angles),
-#           'How many days until my birthday' : QA('How many days until my birthday', get_day_to_birthday), #pylint: disable=line-too-long, bad-continuation
-                                                                                                            #Broken birthday function removed for continuity
-            'What is the velocity of a rock dropped from meters just before it hits the ground' : QA('What is the velocity of a rock dropped from meters just before it hits the ground', get_velocity_dropped_item),
-            'What is the boiling temperature, in degrees fahrenheit, at feet' : QA('What is the boiling temperature, in degrees fahrenheit, at feet', get_boiling_elevation),
+            'What is the velocity of a rock dropped from meters just before it hits the ground' :
+                QA('What is the velocity of a rock dropped from meters'
+                   ' just before it hits the ground', get_velocity_dropped_item),
+            'What is the boiling temperature, in degrees fahrenheit, at feet' :
+                QA('What is the boiling temperature, in degrees fahrenheit, at feet'
+                   , get_boiling_elevation),
             'Is the in the repo' : QA('Is the in the repo', is_file_in_repo),
             'What is the status of' : QA('What is the status of', get_git_file_info),
             'What is the deal with' : QA('What is the deal with', get_file_info),
@@ -87,6 +91,11 @@ class Interface(object):  #pylint: disable=too-many-instance-attributes
 
 
     def request(self, request):
+        """
+
+        :param request: Non question string
+        :return: Data requested
+        """
         if not isinstance(request, str):
             raise Exception('Not A String')
 
@@ -122,6 +131,11 @@ class Interface(object):  #pylint: disable=too-many-instance-attributes
 
     def ask(self, question=""):    #pylint: disable=too-many-branches
                                    #Implemented by other
+        """
+
+        :param question:  String of question
+        :return: Answer, in string form.
+        """
         if not isinstance(question, str):
             self.last_question = None
             raise Exception('Not A String!')
@@ -185,6 +199,12 @@ class Interface(object):  #pylint: disable=too-many-instance-attributes
                 return UNKNOWN_QUESTION
 
     def teach(self, answer=""):
+        """
+        Creates an answer for uknown last asked question
+        :param answer: Answer for unknown question
+        :return: Invalid if no last question, or last quesiton is a
+                 default question.
+        """
         if self.last_question is None:
             return NO_QUESTION
         elif self.last_question in self.question_answers.keys():
@@ -193,6 +213,11 @@ class Interface(object):  #pylint: disable=too-many-instance-attributes
             self.__add_answer(answer)
 
     def correct(self, answer=""):
+        """
+        Corrects answer of last asked question
+        :param answer: Answer to store for question
+        :return: Invalid, if there is not last question to correct
+        """
         if self.last_question is None:
             return NO_QUESTION
         else:

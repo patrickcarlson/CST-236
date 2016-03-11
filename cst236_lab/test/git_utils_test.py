@@ -1,6 +1,5 @@
-#pylint: disable=invalid-name, missing-docstring
 #pylint: disable=anomalous-unicode-escape-in-string, anomalous-backslash-in-string
-# disabled due to names describing the function/class, anomalous portions part of input string
+#  anomalous portions part of input string
 """
 * Author:				Patrick Carlson
 * Date Created:			02/13/2016
@@ -21,8 +20,6 @@
 *   coverage of code from the tests.
 """
 
-######Commented out to prevent lab 6 and 7 from blowing up when trying to grade##########
-######Refactored and run through pylint                                        ##########
 from unittest import TestCase
 from mock import mock, patch
 from source.main import Interface
@@ -31,11 +28,20 @@ from test.plugins.ReqTracer import requirements
 
 PARENT_DIRECTORY = __file__[:-23]
 
-class gitutilstests(TestCase):
+class GitUtilsTests(TestCase):
+    """
+    Contains functions for testing git_utils.py contained in source folder.
+    Utilizes Mock.
+    """
 
     @requirements(['#0100'])
     @patch('source.git_utils.subprocess.Popen')
-    def test_git_util_file_path_abs_bool(self, mock_subproc_popen):
+    def test_git_util_path_abs_bool(self, mock_subproc_popen):
+        """
+        Tests for file that exists in repo
+        :param mock_subproc_popen: Function who's return is mocked
+        :return:
+        """
         p_mock = mock.Mock()
         attrs = {'communicate.return_value' : ('', '')}
         p_mock.configure_mock(**attrs)
@@ -46,7 +52,12 @@ class gitutilstests(TestCase):
 
     @requirements(['#0100'])
     @patch('source.git_utils.subprocess.Popen')
-    def test_git_util_file_path_exists_bool(self, mock_subproc_popen):
+    def test_git_util_path_exists_bool(self, mock_subproc_popen):
+        """
+        Checks path exists in repo
+        :param mock_subproc_popen: Function who's return is mocked
+        :return:
+        """
         p_mock = mock.Mock()
         attrs = {'communicate.return_value' : ('', '')}
         p_mock.configure_mock(**attrs)
@@ -57,7 +68,12 @@ class gitutilstests(TestCase):
 
     @requirements(['#0100'])
     @patch('source.git_utils.subprocess.Popen')
-    def test_git_util_file_path_dne_bool(self, mock_subproc_popen):
+    def test_git_util_path_dne_bool(self, mock_subproc_popen):
+        """
+        Check for path which doesn't exist.
+        :param mock_subproc_popen: Function who's return is mocked
+        :return:
+        """
         p_mock = mock.Mock()
         attrs = {'communicate.return_value' : ('', '')}
         p_mock.configure_mock(**attrs)
@@ -69,7 +85,12 @@ class gitutilstests(TestCase):
 
     @requirements(['#0100'])
     @patch('source.git_utils.subprocess.Popen')
-    def test_git_util_file_path_difffiles_bool(self, mock_subproc_popen):
+    def test_git_util_path_diff_bool(self, mock_subproc_popen):
+        """
+        Checks for existing file, that isn't in repo
+        :param mock_subproc_popen: Function who's return is mocked
+        :return:
+        """
         p_mock = mock.Mock()
         attrs = {'communicate.return_value'
                  : ('didntcommit.txt', '')}
@@ -81,7 +102,12 @@ class gitutilstests(TestCase):
 
     @requirements(['#0101'])
     @patch('source.git_utils.subprocess.Popen')
-    def test_git_utils_path_status_localmod(self, mock_subproc_popen):
+    def test_git_utils_path_localmod(self, mock_subproc_popen):
+        """
+        Checks for return of file that has only been modified locally
+        :param mock_subproc_popen: Function who's return is mocked
+        :return:
+        """
         p_mock1 = mock.Mock()
         attrs = {'communicate.return_value': ("didntcommit.txt", '')}
         p_mock1.configure_mock(**attrs)
@@ -98,7 +124,12 @@ class gitutilstests(TestCase):
 
     @requirements(['#0101'])
     @patch('source.git_utils.subprocess.Popen')
-    def test_git_utils_path_status_untracked(self, mock_subproc_popen):
+    def test_git_utils_path_untracked(self, mock_subproc_popen):
+        """
+        Checks if ability to detected files which have not been checked in, is operational
+        :param mock_subproc_popen: Function who's return is mocked
+        :return:
+        """
         p_mock1 = mock.Mock()
         attrs = {'communicate.return_value' : ('', '')}
         p_mock1.configure_mock(**attrs)
@@ -120,7 +151,12 @@ class gitutilstests(TestCase):
 
     @requirements(['#0101'])
     @patch('source.git_utils.subprocess.Popen')
-    def test_git_utils_path_status_dirty(self, mock_subproc_popen):
+    def test_git_utils_path_dirty(self, mock_subproc_popen):
+        """
+        Checks for functionality of dirty repo detection.
+        :param mock_subproc_popen: Function who's return is mocked
+        :return:
+        """
         p_mock1 = mock.Mock()
         attrs = {'communicate.return_value' : ('', '')}
         p_mock1.configure_mock(**attrs)
@@ -155,7 +191,12 @@ class gitutilstests(TestCase):
 
     @requirements(['#0101'])
     @patch('source.git_utils.subprocess.Popen')
-    def test_git_utils_path_status_dirty_hasuntracked(self, mock_subproc_popen):
+    def test_git_utils_path_dirty_untr(self, mock_subproc_popen):
+        """
+        checks for correct detection of dirty repo with untracked.
+        :param mock_subproc_popen: Function who's return is mocked
+        :return:
+        """
         p_mock1 = mock.Mock()
         attrs = {'communicate.return_value' : ('', '')}
         p_mock1.configure_mock(**attrs)
@@ -185,33 +226,12 @@ class gitutilstests(TestCase):
 
     @requirements(['#0101'])
     @patch('source.git_utils.subprocess.Popen')
-    def test_git_utils_path_status_noaction(self, mock_subproc_popen):
-        # p_mock1 = mock.Mock()
-        # attrs = {'communicate.return_value' : ('', '')}
-        # p_mock1.configure_mock(**attrs)
-        # attrs = {'communicate.return_value' : ('', '')}
-        # p_mock2 = mock.Mock()
-        # p_mock2.configure_mock(**attrs)
-        # attrs = {'communicate.return_value' : ('', '')}
-        # p_mock3 = mock.Mock()
-        # p_mock3.configure_mock(**attrs)
-        # attrs = {'communicate.return_value' : ('', '')}
-        # p_mock4 = mock.Mock()
-        # p_mock4.configure_mock(**attrs)
-        # attrs = {'communicate.return_value' : ('', '')}
-        # p_mock5 = mock.Mock()
-        # p_mock5.configure_mock(**attrs)
-        # attrs = {'communicate.return_value' : ('', '')}
-        # p_mock6 = mock.Mock()
-        # p_mock6.configure_mock(**attrs)
-        # attrs = {'communicate.return_value' : ('', '')}
-        # p_mock7 = mock.Mock()
-        # p_mock7.configure_mock(**attrs)
-        # attrs = {'communicate.return_value' : ('', '')}
-        # p_mock8 = mock.Mock()
-        # p_mock8.configure_mock(**attrs)
-        # mock_subproc_popen.side_effect = [p_mock1, p_mock2, p_mock3, p_mock4,
-        #                                   p_mock5, p_mock6, p_mock7, p_mock8]
+    def test_git_utils_path_noaction(self, mock_subproc_popen):
+        """
+        Checks that detection of a file with no extraordinary status information is correct
+        :param mock_subproc_popen: Function who's return is mocked
+        :return:
+        """
         p_mock = mock.Mock()
         attrs = {'communicate.return_value' : ('', '')}
         p_mock.configure_mock(**attrs)
@@ -225,6 +245,11 @@ class gitutilstests(TestCase):
     @requirements(['#0102'])
     @patch('source.git_utils.subprocess.Popen')
     def test_git_utils_path_info(self, mock_subproc_popen):
+        """
+        Checks that hash info is detected correclty
+        :param mock_subproc_popen: Function who's return is mocked
+        :return:
+        """
         attrs = {'communicate.return_value' : ('somehash, Wed Feb 3 17:32:12 2016 -0800,'
                                                ' patrickcarlson', '')}
         p_mock1 = mock.Mock()
@@ -237,6 +262,11 @@ class gitutilstests(TestCase):
     @requirements(['#0103'])
     @patch('source.git_utils.subprocess.Popen')
     def test_git_utils_branch_info(self, mock_subproc_popen):
+        """
+        Checks that branch info is detected correctly.
+        :param mock_subproc_popen: Function who's return is mocked
+        :return:
+        """
         attrs = {'communicate.return_value' : ('master', '')}
         p_mock1 = mock.Mock()
         p_mock1.configure_mock(**attrs)
@@ -248,6 +278,11 @@ class gitutilstests(TestCase):
     @requirements(['#0104'])
     @patch('source.git_utils.subprocess.Popen')
     def test_git_utils_url(self, mock_subproc_popen):
+        """
+        Checks that appropiate url is returned
+        :param mock_subproc_popen: Function who's return is mocked
+        :return:
+        """
         attrs = {'communicate.return_value' : ('https://github.com/OregonTech/PatrickC', '')}
         p_mock1 = mock.Mock()
         p_mock1.configure_mock(**attrs)
@@ -258,7 +293,12 @@ class gitutilstests(TestCase):
 
     @requirements(['#0101'])
     @patch('source.git_utils.subprocess.Popen')
-    def test_git_utils_get_repo_completeness(self, mock_subproc_popen):
+    def test_git_utils_repo_coverage(self, mock_subproc_popen):
+        """
+        Checks that Assertion is thrown correctly.
+        :param mock_subproc_popen:
+        :return:
+        """
         attrs = {'communicate.return_value' : (__file__, '')}
         p_mock = mock.Mock()
         p_mock.configure_mock(**attrs)

@@ -1,5 +1,3 @@
-#pylint: disable=invalid-name, missing-docstring
-# disabled due to names describing the function/class
 """
 * Author:				Patrick Carlson
 * Date Created:			02/02/2016
@@ -24,13 +22,21 @@ from unittest import TestCase
 from source.main import Interface
 from test.plugins.ReqTracer import story
 
-class coveragejobstories(TestCase):
+class CoverageJobStories(TestCase):
+    """
+    Class contains methods to test aspects of code that have not be tested yet, to provide for more
+    coverage.
+    """
 
 
     @story(['Any time someone asks "What is the smallest amount of coins that can be returned for :'
             ' <cash>?" the application should read back " x quarters, x dimes,'
             ' x nickels, and x pennies."'])
     def test_coin_count(self):
+        """
+        Checks coin count, with different configurations, for code coverage.
+        :return:
+        """
         qaobject = Interface()
         result = qaobject.ask("What is the smallest amount of coins that"
                               " can be returned for: 1.75?")
@@ -43,6 +49,10 @@ class coveragejobstories(TestCase):
             ' side lengths: 3 4 5?" the applications should return " <angle> degrees,'
             ' <angle> degrees, and <angle> degrees"'])
     def test_right_triangle_angles(self):
+        """
+        Does right angle triangle tests for code coverage.
+        :return:
+        """
         qaobject = Interface()
         result = qaobject.ask("What are the angle measurements of a right triangle"
                               " with side lengths: 3 4 5?")
@@ -72,7 +82,11 @@ class coveragejobstories(TestCase):
     @story(['Any time someone asks "What is the velocity of a rock dropped from <height>'
             ' meters just before it hits the ground?" the application will return the'
             ' velocity of the rock.'])
-    def test_get_velocity_object_dropped(self):
+    def test_get_rock_dropped(self):
+        """
+        Checks rock drop question for code coverage.
+        :return:
+        """
         qaobject = Interface()
         result = qaobject.ask("What is the velocity of a rock dropped from 10 meters"
                               " just before it hits the ground?")
@@ -82,6 +96,10 @@ class coveragejobstories(TestCase):
             ' at <elevation> feet?" the application should return the temperature, in degrees'
             ' at which water will boil'])
     def test_get_boiing_elevation(self):
+        """
+        Checks boilng/elevation question for code coverage purposes.
+        :return:
+        """
         qaobject = Interface()
         result = qaobject.ask("What is the boiling temperaturem in degrees fahrenheit,"
                               " at 10000 feet?")
